@@ -4,8 +4,12 @@ namespace toybox\core\application\usecases;
 
 use toybox\core\application\ports\api\dtos\AbonneDTO;
 use toybox\core\application\ports\api\dtos\AjoutArticleDTO;
+use Ramsey\Uuid\Uuid;
 use toybox\core\application\ports\api\dtos\ArticleDTO;
 use toybox\core\domain\entities\Article;
+use toybox\core\domain\entities\Box;
+use toybox\core\domain\entities\Campagne;
+use toybox\core\domain\entities\Client;
 use toybox\infra\repositories\Repository;
 
 class Service
@@ -78,4 +82,82 @@ class Service
         return ($res && $res2);
     }
 
+}
+	public function creerCampagne(float $poids, float $prix_min, float $prix_max){
+        $clients = $this->repository->findAllClients();
+
+        $campagne = new Campagne($poids, $prix_min, $prix_max);
+        $this->repository->createCampagne($campagne);
+
+        foreach ($clients as $client){
+            if($client->getAbonne()){
+                $box_id = $this->creerBox($client, $campagne);
+                $this->repository->createBoxCampagne($box_id, $campagne->getId());
+            }
+        }
+	}
+
+    private function creerBox(Client $client, Campagne $campagne):string{
+        $articles = $this->repository->findAllArticles();
+        $score_total = 0;
+        $poids_total = 0;
+        $prix_total = 0;
+        $possible = true;
+        $id_box = Uuid::uuid4();
+        while ($possible){
+            $possible = false;
+            $best_score = -100;
+            $best_article = null;
+            foreach ($articles as $article){
+                if($poids_total + $article->getPoids() < $campagne->getPoidsMax() &&
+                    $prix_total + $article->getPrix() < $campagne->getPrixMax() &&
+                    $prix_total + $article->getPrix() > $campagne->getPrixMin() &&
+                    !$this->repository->findBoxObjByIdObj($article->getIdObj()) &&
+                    $client->getAge() == $article->getAge()
+                ){
+                    $new_score = $this->calculerScore($article, $client);
+                    if($new_score > $best_score){
+                        $best_score = $new_score;
+                        $best_article = $article;
+                        $possible = true;
+                    }
+                }
+            }
+            if($possible){
+                $score_total += $best_score;
+                $poids_total += $best_article->getPoids();
+                $prix_total += $best_article->getPrix();
+                $this->repository->createBoxObj($id_box, $best_article->getId());
+            }
+        }
+        $box = new Box($client->getId(), $poids_total, $score_total, $prix_total);
+        $box->setId($id_box);
+        $this->repository->createBox($box);
+        return 'test';
+    }
+
+    private function calculerScore(Article $article, Client $client):float {
+        $score = 0;
+        switch ($article->getIdCategorie()){
+            case $client->getCateg1():
+                $score += 10;
+                break;
+            case $client->getCateg2():
+                $score += 8;
+                break;
+            case $client->getCateg3():
+                $score += 6;
+                break;
+            case $client->getCateg4():
+                $score += 4;
+                break;
+            case $client->getCateg5():
+                $score += 2;
+                break;
+            case $client->getCateg6():
+                $score += 1;
+                break;
+        }
+        return $score;
+    }
 }

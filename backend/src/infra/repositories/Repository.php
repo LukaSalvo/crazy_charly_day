@@ -2,10 +2,14 @@
 
 namespace toybox\infra\repositories;
 
+use Ramsey\Uuid\Uuid;
 use PDO;
 use toybox\core\domain\entities\Age;
 use toybox\core\domain\entities\Article;
+use toybox\core\domain\entities\Box;
+use toybox\core\domain\entities\Campagne;
 use toybox\core\domain\entities\Categorie;
+use toybox\core\domain\entities\Client;
 use toybox\core\domain\entities\Etat;
 use toybox\core\domain\entities\User;
 
@@ -35,6 +39,28 @@ class Repository
             );
         }
         return $articles;
+    }
+
+    public function findAllClients():array {
+        $sql = "SELECT * FROM client";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $clients = [];
+        foreach($rows as $client){
+            $clients[]= new Client(
+                $client['id'],
+                $client['age'],
+                $client['categ_1'],
+                $client['categ_2'],
+                $client['categ_3'],
+                $client['categ_4'],
+                $client['categ_5'],
+                $client['categ_6'],
+                $client['abonne']
+            );
+        }
+        return $clients;
     }
 
     public function findCategorieById(int $id): Categorie{
@@ -151,5 +177,51 @@ class Repository
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return true;
+    }
+}
+    public function createCampagne(Campagne  $campagne){
+        $sql = "INSERT INTO campagne VALUES (:id, :poids, :prix_min, :prix_max)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $campagne->getId(), PDO::PARAM_STR);
+        $stmt->bindValue(':poids', $campagne->getPoidsMax(), PDO::PARAM_STR);
+        $stmt->bindValue(':prix_min', $campagne->getPrixMin(), PDO::PARAM_STR);
+        $stmt->bindValue(':prix_max', $campagne->getPrixMax(), PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function createBox(Box $box){
+        $sql = "INSERT INTO box VALUES (:id, :id_client, :poids, :prix, :score)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $box->getId(), PDO::PARAM_STR);
+        $stmt->bindValue(':id_client', $box->getIdClient(), PDO::PARAM_STR);
+        $stmt->bindValue(':poids', $box->getPoidsMax(), PDO::PARAM_STR);
+        $stmt->bindValue(':prix', $box->getPrix(), PDO::PARAM_STR);
+        $stmt->bindValue(':score', $box->getScore(), PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function createBoxObj(string $id_box, string $id_obj){
+        $sql = "INSERT INTO box_obj VALUES (:id_box, :id_obj)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_box', $id_box, PDO::PARAM_STR);
+        $stmt->bindValue(':id_obj', $id_obj, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function findBoxObjByIdObj(string $id_obj):bool{
+        $sql = "SELECT * FROM boxobj WHERE id_article = :id_obj";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_obj', $id_obj, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return count($row) > 0;
+    }
+
+    public function createBoxCampagne(string $id_box, string $id_campagne){
+        $sql = "INSERT INTO boxcampagne VALUES (:id_box, :id_campagne)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_box', $id_box, PDO::PARAM_STR);
+        $stmt->bindValue(':id_campagne', $id_campagne, PDO::PARAM_STR);
+        $stmt->execute();
     }
 }
