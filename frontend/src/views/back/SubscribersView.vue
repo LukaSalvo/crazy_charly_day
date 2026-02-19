@@ -8,7 +8,7 @@ const error = ref('')
 async function fetchSubscribers() {
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch('http://localhost:8082/abonnes', {
+    const res = await fetch('https://back.cesareuh.fr/abonnes', {
       headers: { 'Authorization': `Bearer ${token}` }
     })
     if (res.status === 401 || res.status === 403) throw new Error('Accès non autorisé')
@@ -26,7 +26,7 @@ async function deleteSubscriber(id) {
   
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch(`http://localhost:8082/abonnes/${id}`, {
+    const res = await fetch(`https://back.cesareuh.fr/abonnes/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     })

@@ -39,7 +39,7 @@ const etats = [
 async function fetchArticles() {
   loading.value = true
   try {
-    const res = await fetch('http://localhost:8082/articles')
+    const res = await fetch('https://back.cesareuh.fr/articles')
     if (!res.ok) throw new Error('Erreur lors du chargement des articles')
     articles.value = await res.json()
   } catch (err) {
@@ -52,7 +52,7 @@ async function fetchArticles() {
 async function addArticle() {
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch('http://localhost:8082/articles', {
+    const res = await fetch('https://back.cesareuh.fr/articles', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ async function deleteArticle(id) {
   
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch(`http://localhost:8082/articles/${id}`, {
+    const res = await fetch(`https://back.cesareuh.fr/articles/${id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`

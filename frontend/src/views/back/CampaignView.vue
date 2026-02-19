@@ -14,7 +14,7 @@ async function launchCampaign() {
   message.value = ''
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch('http://localhost:8082/campagnes', {
+    const res = await fetch('https://back.cesareuh.fr/campagnes', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

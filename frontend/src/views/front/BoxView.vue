@@ -15,7 +15,7 @@ async function fetchBox() {
 
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch(`http://localhost:8082/abonnes/${user.id}/box`, {
+    const res = await fetch(`https://back.cesareuh.fr/abonnes/${user.id}/box`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
