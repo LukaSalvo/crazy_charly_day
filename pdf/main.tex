@@ -28,7 +28,9 @@
     
     \vspace{4cm}
     
-    {\scshape\LARGE IUT - Équipe Mixte \par}
+    {\scshape\LARGE IUT - Crazy Crew \par}
+    \vspace{1.5cm}
+    {\scshape\LARGE Equipe mixte \par}
     \vspace{1.5cm}
     {\huge\bfseries Cahier des Charges : Projet ToyBoxing\par}
     \vspace{0.5cm}
@@ -40,7 +42,7 @@
     \vspace{2cm}
 
     \vfill
-    {\large Réalisé par :\\ \textbf{Groupe 2}}
+    {\large Réalisé par :\\ \textbf{2 Crazy Crew}}
     
     \vfill
     {\large \today \par}
@@ -50,21 +52,22 @@
 \tableofcontents
 \newpage
 
-% --- CONTENU DU DOCUMENT ---
 \section{Présentation du projet}
 Ce projet est réalisé pour l'association \textbf{Toys Academy} dans le cadre des \textbf{Crazy Charly Day 2026}. L'objectif est de concevoir une application Web permettant la gestion et l'optimisation de "Toy Boxes" : des boîtes de jouets reconditionnés envoyées aux abonnés selon leurs préférences et l'âge de l'enfant.
 
 \section{Objectifs techniques}
-Le développement s'articule autour de trois axes principaux:
+Le développement s'articule autour de certains axes principaux:
 \begin{itemize}
     \item Une application Web de gestion des articles et des abonnements.
     \item Une optimisation de la composition des box.
     \item Un déploiement de la solution globale sur un serveur public.
+    \item Une collaboration inter-départements pour enrichir les fonctionnalités et l'expérience utilisateur.
+    \item Une interface responsive pour les abonnés, accessible sur mobile.
 \end{itemize}
 
 \section{Spécifications Fonctionnelles}
 
-\subsection{Base de donnée}
+\subsection{Base de données}
 La base de données doit inclure les tables suivantes :
 \begin{itemize}
     \item \textbf{Article} : id : UUID , désignation : string , id\_categ : entier , id\_age : entier , id\_etat : entier , prix : numeric(10,2) , poids : numeric(10,3).
@@ -78,26 +81,52 @@ La base de données doit inclure les tables suivantes :
     \item \textbf{Boxobj} : id\_box : UUID , id\_article : UUID.
     \item \textbf{Boxcampagne} : id\_box : UUID , id\_campagne : UUID.
 \end{itemize}
+Voici un schéma de la base de données :
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{img/Capture d’écran 2026-02-19 à 14.32.31.png}
+\end{center}
 
-\subsection{Back-office (Gestionnaires)}
-Le back-office, accessible via une adresse distincte sans authentification initiale, doit permettre de :
+
+\subsection{Conteneurisation}
+L'application doit être conteneurisée à l'aide de Docker, avec les services suivants :
 \begin{itemize}
-    \item Gérer le catalogue d'articles (désignation, catégorie, tranche d'âge, état, prix et poids).
-    \item Gérer la liste des abonnés (tranche d'âge de l'enfant, préférences).
-    \item Paramétrer et lancer une campagne de composition avec optimisation (poids maximum).
-    \item Consulter et valider les box composées (score, poids, prix total) et l'historique.
+    \item \textbf{Backend} : Un conteneur basé sur PHP 8.2+ hébergeant l'API REST.
+    \item \textbf{Frontend} : Un conteneur Node.js pour le développement (Vite) et un serveur Nginx pour la production.
+    \item \textbf{Base de données} : Un conteneur PostgreSQL 15+ pour la persistance des données.
+    \item \textbf{Orchestration} : Utilisation de \texttt{docker-compose} pour lier les services, gérer les volumes de données et les réseaux internes.
 \end{itemize}
 
-\subsection{Front-office (Abonnés)}
-L'interface doit être \textbf{responsive} (utilisable sur mobile)  et permettre de :
+\section{Architecture Logicielle}
+L'arborescence du projet témoigne d'une volonté de séparation des responsabilités :
+
+\subsection{Backend (PHP)}
+Le backend suit une \textbf{architecture hexagonale} (ou Clean Architecture) pour garantir la maintenabilité :
 \begin{itemize}
-    \item S'inscrire (nom, prénom, email, âge de l'enfant).
-    \item Ordonner les 6 catégories de jouets par préférence.
-    \item Consulter la composition de sa box via l'adresse email.
-    \item Modifier ses préférences de catégories.
+    \item \textbf{Application Core} : Contient la logique métier (\texttt{Service.php}) et les cas d'utilisation (\texttt{usecases}).
+    \item \textbf{Infrastructure} : Gère les détails techniques comme l'accès à la base de données via des dépôts (\texttt{repositories}).
+    \item \textbf{API (Interface)} : Point d'entrée de l'application géré par des Actions (\texttt{LoginAction}, \texttt{RegisterAction}) et sécurisé par des middlewares (JWT, CORS, Authz).
 \end{itemize}
 
-\section{Contraintes et Organisation}
-Conformément aux attentes, l'accent est mis sur la collaboration avec les étudiants des autres départements de l'IUT. La liste des fonctionnalités peut être complétée ou modifiée selon les idées issues de ces échanges.
+\subsection{Frontend (Vue.js)}
+Le frontend est développé avec le framework \textbf{Vue.js 3} et l'outil de build \textbf{Vite}.
+\begin{itemize}
+    \item Architecture basée sur des composants réutilisables (\texttt{components}).
+    \item Communication avec le backend via des appels asynchrones à l'API REST.
+\end{itemize}
+
+\section{Pipeline de Déploiement (CI/CD)}
+Afin de garantir la qualité et la stabilité du code à chaque modification :
+\begin{itemize}
+    \item \textbf{Intégration Continue} : Utilisation de GitHub Actions pour automatiser les tests.
+    \item \textbf{Validation Docker} : À chaque \textit{push} sur la branche principale, une pipeline vérifie que les conteneurs se construisent (\texttt{build}) et démarrent (\texttt{up}) correctement.
+    \item \textbf{Sécurité} : Gestion des variables d'environnement sensibles via les \textit{Secrets} GitHub pour éviter toute fuite de données de connexion.
+\end{itemize}
+
+\section{Plan de Tests}
+\begin{itemize}
+    \item \textbf{Tests Unitaires} : Vérification de la logique métier dans le \texttt{Application Core}.
+    \item \textbf{Tests d'Intégration} : Validation de la connexion entre l'API et la base de données PostgreSQL.
+    \item \textbf{Tests de Disponibilité} : Vérification de la réponse HTTP 200 sur les points d'entrée critiques (Home, Liste des articles).
+\end{itemize}
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  19 FEB 2026 14:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  19 FEB 2026 14:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -310,7 +310,7 @@ Package hyperref Info: Link coloring OFF on input line 11.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-<img/logo_iut.png, id=32, 244.915pt x 198.7425pt>
+<img/logo_iut.png, id=44, 244.915pt x 198.7425pt>
 File: img/logo_iut.png Graphic file (type png)
 <use img/logo_iut.png>
 Package pdftex.def Info: img/logo_iut.png  used on input line 19.
@@ -321,11 +321,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 21.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 21.
-<img/logo_toys_academi.png, id=34, 647.41875pt x 719.68875pt>
+<img/logo_toys_academi.png, id=46, 608.2725pt x 613.29124pt>
 File: img/logo_toys_academi.png Graphic file (type png)
 <use img/logo_toys_academi.png>
 Package pdftex.def Info: img/logo_toys_academi.png  used on input line 25.
-(pdftex.def)             Requested size: 113.81102pt x 126.50748pt.
+(pdftex.def)             Requested size: 113.81102pt x 114.7485pt.
 
 
 [1
@@ -340,32 +340,45 @@ Package pdftex.def Info: img/logo_toys_academi.png  used on input line 25.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.51 \newpage
+l.53 \newpage
               [1]
+<img/Capture d’écran 2026-02-19 à 14.32.31.png, id=76, 601.24625pt x 585.18625pt>
+File: img/Capture d’écran 2026-02-19 à 14.32.31.png Graphic file (type png)
+<use img/Capture d’écran 2026-02-19 à 14.32.31.png>
+Package pdftex.def Info: img/Capture d’écran 2026-02-19 à 14.32.31.png  used on input line 86.
+(pdftex.def)             Requested size: 364.19667pt x 354.48076pt.
+
 
 [2]
 
-[3] (./main.aux)
+[3 <./img/Capture d’écran 2026-02-19 à 14.32.31.png>]
+Overfull \hbox (5.29184pt too wide) in paragraph at lines 107--108
+[]\T1/cmr/bx/n/12 API (In-ter-face) \T1/cmr/m/n/12 : Point d'en-tr�e de l'ap-pli-ca-tion g�r� par des Ac-tions (\T1/cmtt/m/n/12 LoginAction\T1/cmr/m/n/12 ,
+ []
+
+
+
+[4] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: CE371BDDAA96B4FDD93332572B1755D8;1202.
+(rerunfilecheck)             Checksum: 7B93D3FF1066337AAF274691FC6A4322;1554.
  ) 
 Here is how much of TeX's memory you used:
- 11452 strings out of 473190
- 187217 string characters out of 5704335
- 607485 words of memory out of 5000000
- 34578 multiletter control sequences out of 15000+600000
- 569786 words of font info for 56 fonts, out of 8000000 for 9000
+ 11473 strings out of 473190
+ 187807 string characters out of 5704335
+ 605488 words of memory out of 5000000
+ 34593 multiletter control sequences out of 15000+600000
+ 570783 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,79p,428b,549s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfcc2074.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfti1728.pfb>
-Output written on main.pdf (4 pages, 616834 bytes).
+ 75i,6n,79p,428b,561s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfcc2074.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfti1728.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on main.pdf (5 pages, 700055 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 82 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 67 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 142 PDF objects out of 1000 (max. 8388607)
+ 107 compressed objects within 2 object streams
+ 16 named destinations out of 1000 (max. 500000)
+ 96 words of extra memory for PDF output out of 10000 (max. 10000000)
 
