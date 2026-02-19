@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  19 FEB 2026 22:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.11.7)  19 FEB 2026 22:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -330,7 +330,9 @@ Package pdftex.def Info: img/logo_toys_academi.png  used on input line 25.
 
 [1
 
-{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./img/logo_iut.png> <./img/logo_toys_academi.png>] (./main.toc)
+{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}{/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./img/logo_iut.png> <./img/logo_toys_academi.png>]
+
+[2] (./main.toc)
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
@@ -342,14 +344,19 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
                    \relax 
 l.58 \newpage
               [1]
-<img/Capture d’écran 2026-02-19 à 14.32.31.png, id=82, 601.24625pt x 585.18625pt>
+<img/Capture d’écran 2026-02-19 à 14.32.31.png, id=86, 601.24625pt x 585.18625pt>
 File: img/Capture d’écran 2026-02-19 à 14.32.31.png Graphic file (type png)
 <use img/Capture d’écran 2026-02-19 à 14.32.31.png>
 Package pdftex.def Info: img/Capture d’écran 2026-02-19 à 14.32.31.png  used on input line 91.
 (pdftex.def)             Requested size: 364.19667pt x 354.48076pt.
 
 
-[2]
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.92 \end{center}
+                  [2]
 Overfull \hbox (16.0852pt too wide) in paragraph at lines 112--113
 []\T1/cmr/bx/n/12 Application Core \T1/cmr/m/n/12 : La lo-gique m�-tier est iso-l�e dans le na-mes-pace \T1/cmtt/m/n/12 application_core\T1/cmr/m/n/12 .
  []
@@ -385,10 +392,10 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  75i,6n,79p,428b,565s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfcc2074.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sfti1728.pfb></opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (5 pages, 711025 bytes).
+Output written on main.pdf (6 pages, 712269 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 113 compressed objects within 2 object streams
+ 151 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
  17 named destinations out of 1000 (max. 500000)
  104 words of extra memory for PDF output out of 10000 (max. 10000000)
 
