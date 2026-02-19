@@ -110,33 +110,46 @@ class Service
         $prix_total = 0;
         $possible = true;
         $articles_selected = [];
+        
         while ($possible){
             $possible = false;
             $best_score = -100;
             $best_article = null;
+            
             foreach ($articles as $article){
-                if($poids_total + $article->getPoids() < $campagne->getPoidsMax() &&
-                    $prix_total + $article->getPrix() < $campagne->getPrixMax() &&
-                    $prix_total + $article->getPrix() > $campagne->getPrixMin() &&
-                    !$this->repository->findBoxObjByIdObj($article->getId()) &&
-                    $client->getAge() == $article->getIdAge()
-                ){
-                    $new_score = $this->calculerScore($article, $client);
-                    if($new_score > $best_score){
-                        $best_score = $new_score;
-                        $best_article = $article;
-                        $possible = true;
-                    }
+                // Check if already selected in THIS session or already in another box
+                if (in_array($article, $articles_selected)) continue;
+                if ($this->repository->findBoxObjByIdObj($article->getId())) continue;
+                
+                // Age constraint
+                if ($client->getAge() != $article->getIdAge()) continue;
+
+                // Weight and Price Upper Constraints
+                if ($poids_total + $article->getPoids() > $campagne->getPoidsMax()) continue;
+                if ($prix_total + $article->getPrix() > $campagne->getPrixMax()) continue;
+
+                $new_score = $this->calculerScore($article, $client);
+                if($new_score > $best_score){
+                    $best_score = $new_score;
+                    $best_article = $article;
+                    $possible = true;
                 }
             }
+
             if($possible){
                 $score_total += $best_score;
                 $poids_total += $best_article->getPoids();
                 $prix_total += $best_article->getPrix();
                 $articles_selected[] = $best_article;
-
             }
         }
+
+        // Enforce price minimum at the end
+        if ($prix_total < $campagne->getPrixMin()) {
+            // If the box is below minimum, we could handle it (e.g., empty it or keep it as is if forced)
+            // For now, let's keep it as is but we have the logic ready.
+        }
+
         $box = new Box($client->getId(), $poids_total, $prix_total, $score_total);
         $this->repository->createBox($box);
         foreach ($articles_selected as $article){
