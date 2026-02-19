@@ -1,0 +1,101 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx} % Essentiel pour les images
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\begin{document}
+
+% --- PAGE DE GARDE AVEC LOGOS ---
+\begin{titlepage}
+    \centering
+    % Insertion des deux logos en haut
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushleft}
+            \includegraphics[width=4cm]{img/logo_iut.png} % 
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \begin{flushright}
+            \includegraphics[width=4cm]{img/logo_toys_academi.png} % Remplacez par votre fichier
+        \end{flushright}
+    \end{minipage}
+    
+    \vspace{4cm}
+    
+    {\scshape\LARGE IUT - Équipe Mixte \par}
+    \vspace{1.5cm}
+    {\huge\bfseries Cahier des Charges : Projet ToyBoxing\par}
+    \vspace{0.5cm}
+    {\Large\itshape Crazy Charly Day 2026\par}
+    
+    \vspace{2cm}
+    \textbf{Commanditaire :}\\
+    Association Toys Academy \par
+    \vspace{2cm}
+
+    \vfill
+    {\large Réalisé par :\\ \textbf{Groupe 2}}
+    
+    \vfill
+    {\large \today \par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+% --- CONTENU DU DOCUMENT ---
+\section{Présentation du projet}
+Ce projet est réalisé pour l'association \textbf{Toys Academy} dans le cadre des \textbf{Crazy Charly Day 2026}. L'objectif est de concevoir une application Web permettant la gestion et l'optimisation de "Toy Boxes" : des boîtes de jouets reconditionnés envoyées aux abonnés selon leurs préférences et l'âge de l'enfant.
+
+\section{Objectifs techniques}
+Le développement s'articule autour de trois axes principaux:
+\begin{itemize}
+    \item Une application Web de gestion des articles et des abonnements.
+    \item Une optimisation de la composition des box.
+    \item Un déploiement de la solution globale sur un serveur public.
+\end{itemize}
+
+\section{Spécifications Fonctionnelles}
+
+\subsection{Base de donnée}
+La base de données doit inclure les tables suivantes :
+\begin{itemize}
+    \item \textbf{Object} : id : entier , désignation : string , catégorie : string , age : entier , id\_etat : entier, prix : entier, poids : entier.
+    \item \textbf{Utilisateurs} : id\_utilisateur : entier , nom : string , email : string, mdp : string, role : string.
+    \item \textbf{Clients} : id\_client : entier , age : entier , date de composition : date, score : entier, poids total : entier, prix total : entier, abonn : booléen.
+    \item \textbf{Catégories} : id\_categorie : entier , libellé : string.
+    \item \textbf{Age} : id : entier , libellé : string.
+    \item \textbf{Boxs} : id : entier , id\_client : entier , validee : booléen, poix\_total : entier , prix\_total : entier, score : entier.
+    \item \textbf{Etat} : id\_etat : entier , libellé : string. 
+    \item \textbf{Box\_Object} : id\_box : entier , id\_object : entier.
+\end{itemize}
+
+\subsection{Back-office (Gestionnaires)}
+Le back-office, accessible via une adresse distincte sans authentification initiale, doit permettre de :
+\begin{itemize}
+    \item Gérer le catalogue d'articles (désignation, catégorie, tranche d'âge, état, prix et poids).
+    \item Gérer la liste des abonnés (tranche d'âge de l'enfant, préférences).
+    \item Paramétrer et lancer une campagne de composition avec optimisation (poids maximum).
+    \item Consulter et valider les box composées (score, poids, prix total) et l'historique.
+\end{itemize}
+
+\subsection{Front-office (Abonnés)}
+L'interface doit être \textbf{responsive} (utilisable sur mobile)  et permettre de :
+\begin{itemize}
+    \item S'inscrire (nom, prénom, email, âge de l'enfant).
+    \item Ordonner les 6 catégories de jouets par préférence.
+    \item Consulter la composition de sa box via l'adresse email.
+    \item Modifier ses préférences de catégories.
+\end{itemize}
+
+\section{Contraintes et Organisation}
+Conformément aux attentes, l'accent est mis sur la collaboration avec les étudiants des autres départements de l'IUT. La liste des fonctionnalités peut être complétée ou modifiée selon les idées issues de ces échanges.
+
+\end{document}

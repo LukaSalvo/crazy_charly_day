@@ -1,0 +1,8 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{\numberline {1}Présentation du projet}{2}{section.1}%
+\contentsline {section}{\numberline {2}Objectifs techniques}{2}{section.2}%
+\contentsline {section}{\numberline {3}Spécifications Fonctionnelles}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Base de donnée}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Back-office (Gestionnaires)}{2}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Front-office (Abonnés)}{3}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Contraintes et Organisation}{3}{section.4}%
