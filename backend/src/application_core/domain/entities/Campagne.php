@@ -16,9 +16,13 @@ class Campagne
      * @param float $prix_min
      * @param float $prix_max
      */
-    public function __construct(float $poids_max, float $prix_min, float $prix_max)
+    public function __construct(float $poids_max, float $prix_min, float $prix_max, ?string $id = null)
     {
-        $this->id = Uuid::uuid4();
+        if($id != null) {
+            $this->id = $id;
+        }else{
+            $this->id = Uuid::uuid4();
+        }
         $this->poids_max = $poids_max;
         $this->prix_min = $prix_min;
         $this->prix_max = $prix_max;

@@ -6,6 +6,7 @@ use toybox\core\application\ports\api\dtos\AbonneDTO;
 use toybox\core\application\ports\api\dtos\AjoutArticleDTO;
 use Ramsey\Uuid\Uuid;
 use toybox\core\application\ports\api\dtos\ArticleDTO;
+use toybox\core\application\ports\api\dtos\CampagneDTO;
 use toybox\core\domain\entities\Article;
 use toybox\core\domain\entities\Box;
 use toybox\core\domain\entities\Campagne;
@@ -182,6 +183,22 @@ class Service
             $boxsDTO[] = new BoxDTO($box->getId(), $box->getPoids(), $box->getPrix(), $box->getScore(), $articlesDTO);
         }
         return $boxsDTO;
+    }
+
+    public function validerBox(mixed $id)
+    {
+        $res = $this->repository->validerBox($id);
+        return $res;
+    }
+
+    public function listerCampagnes()
+    {
+        $campagnes = $this->repository->findAllCampagnes();
+        $campagnesDTO = [];
+        foreach($campagnes as $campagne){
+            $campagnesDTO[] = new CampagneDTO($campagne->getId(), $campagne->getPoidsMax(), $campagne->getPrixMin(), $campagne->getPrixMax());
+        }
+        return $campagnesDTO;
     }
 
 

@@ -267,4 +267,26 @@ class Repository
             $row['poids']
         );
     }
+
+    public function validerBox(mixed $id)
+    {
+        $sql = "UPDATE box SET valide = TRUE WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    }
+
+    public function findAllCampagnes()
+    {
+        $sql = "SELECT * FROM campagne";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $campagnes = [];
+        foreach($rows as $campagne){
+            $campagnes[] = new Campagne($campagne['poids_max'], $campagne['prix_min'], $campagne['prix_max'], $campagne['id']);
+        }
+        return $campagnes;
+    }
 }

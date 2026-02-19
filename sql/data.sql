@@ -97,6 +97,7 @@ create table box
     prix      NUMERIC(10, 2),
     poids     NUMERIC(10, 3),
     score     INTEGER,
+    valide    BOOLEAN DEFAULT FALSE,
 
     CONSTRAINT fk_id_client
         FOREIGN KEY (id_client)
@@ -185,10 +186,10 @@ VALUES
     ('Jeu éducatif', 2, 2, 3, 30.00, 1.0),
     ('Casque vélo', 4, 4, 2, 45.50, 0.8);
 
-INSERT INTO box (id_client, prix, poids, score)
+INSERT INTO box (id_client, prix, poids, score, valide)
 VALUES
-    ((SELECT id FROM utilisateur WHERE nom = 'Bob Martin'), 80.00, 3.0, 90),
-    ((SELECT id FROM utilisateur WHERE nom = 'Charlie Bernard'), 100.50, 4.2, 85);
+    ((SELECT id FROM utilisateur WHERE nom = 'Bob Martin'), 80.00, 3.0, 90, FALSE),
+    ((SELECT id FROM utilisateur WHERE nom = 'Charlie Bernard'), 100.50, 4.2, 85, FALSE);
 
 INSERT INTO campagne (id, poids_max, prix_min, prix_max)
 VALUES

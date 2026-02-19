@@ -6,8 +6,10 @@ use toybox\api\actions\CreerCampagneAction;
 use toybox\api\actions\ListerAbonnesAction;
 use toybox\api\actions\ListerArticlesAction;
 use toybox\api\actions\ListerBoxAction;
+use toybox\api\actions\ListerCampagneAction;
 use toybox\api\actions\SupprimerAbonneAction;
 use toybox\api\actions\SupprimerArticleAction;
+use toybox\api\actions\ValiderBoxAction;
 use toybox\api\middlewares\AjouterArticleMiddleware;
 use toybox\api\actions\LoginAction;
 use toybox\api\actions\RegisterAction;
@@ -41,6 +43,11 @@ return function (App $app): App {
     });
     $app->post('/campagnes', CreerCampagneAction::class)->setName('creer_campagne');
     $app->get('/boxes', ListerBoxAction::class)->setName('lister_boxes');
+    $app->options('/boxes/{id}', function ($request, $response) {
+        return $response;
+    });
+    $app->put('/boxes/{id}', ValiderBoxAction::class)->setName('valider_box');
+    $app->get('/campagnes', ListerCampagneAction::class)->setName('lister_campagnes');
 
     return $app;
 };
