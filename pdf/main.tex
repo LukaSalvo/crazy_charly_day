@@ -67,14 +67,16 @@ Le développement s'articule autour de trois axes principaux:
 \subsection{Base de donnée}
 La base de données doit inclure les tables suivantes :
 \begin{itemize}
-    \item \textbf{Object} : id : entier , désignation : string , catégorie : string , age : entier , id\_etat : entier, prix : entier, poids : entier.
-    \item \textbf{Utilisateurs} : id\_utilisateur : entier , nom : string , email : string, mdp : string, role : string.
-    \item \textbf{Clients} : id\_client : entier , age : entier , date de composition : date, score : entier, poids total : entier, prix total : entier, abonn : booléen.
-    \item \textbf{Catégories} : id\_categorie : entier , libellé : string.
+    \item \textbf{Article} : id : UUID , désignation : string , id\_categ : entier , id\_age : entier , id\_etat : entier , prix : numeric(10,2) , poids : numeric(10,3).
+    \item \textbf{Utilisateur} : id : UUID , nom : string , mail : string , mdp : string , admin : booléen.
+    \item \textbf{Client} : id : UUID (FK utilisateur) , age : entier , categ\_1 à categ\_6 : entier (FK catégorie).
+    \item \textbf{Catégorie} : id : entier , libellé : string.
     \item \textbf{Age} : id : entier , libellé : string.
-    \item \textbf{Boxs} : id : entier , id\_client : entier , validee : booléen, poix\_total : entier , prix\_total : entier, score : entier.
-    \item \textbf{Etat} : id\_etat : entier , libellé : string. 
-    \item \textbf{Box\_Object} : id\_box : entier , id\_object : entier.
+    \item \textbf{Etat} : id : entier , libellé : string.
+    \item \textbf{Box} : id : UUID , id\_client : UUID , prix : numeric(10,2) , poids : numeric(10,3) , score : entier.
+    \item \textbf{Campagne} : id : UUID , poids\_max : numeric(10,3) , prix\_min : numeric(10,2) , prix\_max : numeric(10,2).
+    \item \textbf{Boxobj} : id\_box : UUID , id\_article : UUID.
+    \item \textbf{Boxcampagne} : id\_box : UUID , id\_campagne : UUID.
 \end{itemize}
 
 \subsection{Back-office (Gestionnaires)}

@@ -13,6 +13,16 @@ jobs:
     steps:
       - name: Checkout du code
         uses: actions/checkout@v4
+      - name: Create temporary .env file
+        run: |
+          touch .env
+          echo "MYSQL_DATABASE=app_db" >> .env
+          echo "MYSQL_ROOT_PASSWORD=root_password" >> .env
+          # Ajoutez ici toutes les autres variables réclamées par vos fichiers
+          echo "VITE_API_URL=http://localhost:8080" >> .env
+
+      - name: Build et Lancement de la stack
+        run: docker compose up -d --build
 
       - name: Build et Lancement de la stack
         run: docker compose up -d --build
@@ -20,7 +30,6 @@ jobs:
       - name: Vérification du statut des conteneurs
         run: |
           docker ps
-          # On attend quelques secondes pour laisser les services démarrer
           sleep 15 
 
       - name: Test de réponse du Backend (PHP)
