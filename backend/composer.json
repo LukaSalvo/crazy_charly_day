@@ -30,5 +30,10 @@
       "toybox\\core\\": "src/application_core",
       "toybox\\infra\\": "src/infra"
     }
+  },
+  "config": {
+    "audit": {
+      "block-insecure": false
+    }
   }
 }
