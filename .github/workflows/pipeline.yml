@@ -34,11 +34,11 @@ jobs:
 
       - name: Test de réponse du Backend (PHP)
         run: |
-          curl --fail http://localhost:8080 || exit 1
+          curl --fail http://localhost:8082 || exit 1
 
       - name: Test de réponse du Frontend (Vue)
         run: |
-          curl --fail http://localhost:5173 || exit 1
+          curl --fail http://localhost:5173|| exit 1
 
       - name: Vérification des logs en cas d'échec
         if: failure()
