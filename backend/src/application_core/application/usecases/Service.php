@@ -31,4 +31,9 @@ class Service
         return $articlesDTO;
     }
 
+    public function SupprimerArticle(string $id): bool
+    {
+        return $this->repository->DeleteArticleById($id);
+    }
+
 }

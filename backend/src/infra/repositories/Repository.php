@@ -68,4 +68,16 @@ class Repository
         $etat = new Etat($row['id'], $row['libelle']);
         return $etat;
     }
+
+    public function DeleteArticleById(string $id){
+        try {
+            $sql = "DELETE FROM article WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+        }catch (\Throwable $th){
+            return false;
+        }
+        return true;
+    }
 }
