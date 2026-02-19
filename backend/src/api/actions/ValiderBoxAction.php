@@ -8,19 +8,21 @@ use toybox\core\application\usecases\Service;
 
 class ValiderBoxAction
 {
-    private Service $service;
+    public function __construct(private Service $service) {}
 
-    public function __construct(Service $service){
-        $this->service = $service;
-    }
-
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response,$args)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
         $id = $args['id'];
-        $res = $this->service->validerBox($id);
-        if(!$res){
-            return $response->withStatus(400);
+        $success = $this->service->validerBox($id);
+
+        if (!$success) {
+            $response->getBody()->write(json_encode(['error' => 'Erreur lors de la validation']));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
         }
-        return $response->withStatus(200);
+
+        $response->getBody()->write(json_encode(['success' => true]));
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
     }
 }

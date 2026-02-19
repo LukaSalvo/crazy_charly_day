@@ -15,6 +15,7 @@ class Box
     private float $poids;
     private float $prix;
     private int $score;
+    private bool $valide = false;
 
     /**
      * @param string $id_client
@@ -54,5 +55,15 @@ class Box
     public function getScore(): int
     {
         return $this->score;
+    }
+
+    public function isValide(): bool
+    {
+        return $this->valide;
+    }
+
+    public function setValide(bool $valide): void
+    {
+        $this->valide = $valide;
     }
 }

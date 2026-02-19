@@ -209,10 +209,9 @@ class Service
         return $articlesDTO;
     }
 
-    public function validerBox(mixed $id)
+    public function validerBox(string $boxId): bool
     {
-        $res = $this->repository->validerBox($id);
-        return $res;
+        return $this->repository->updateBoxValidationStatus($boxId, true);
     }
 
     public function listerCampagnes()
@@ -225,5 +224,41 @@ class Service
         return $campagnesDTO;
     }
 
+    public function listerToutesLesBox(): array
+    {
+        $data = $this->repository->findAllBoxesWithClient();
+        $boxData = [];
 
+        foreach ($data as $item) {
+            $box = $item['box'];
+            $articles = $this->repository->findArticlesByBoxId($box->getId());
+            $articlesDTO = [];
+
+            foreach($articles as $article){
+                $categorie = $this->repository->findCategorieById($article->getIdCategorie());
+                $etat = $this->repository->findEtatById($article->getIdEtat());
+                $age = $this->repository->findAgeById($article->getIdAge());
+                $articlesDTO[] = new ArticleDTO(
+                    $article->getId(),
+                    $article->getDesignation(),
+                    $categorie->getLibelle(),
+                    $age->getLibelle(),
+                    $etat->getLibelle(),
+                    $article->getPrix(),
+                    $article->getPoids()
+                );
+            }
+
+            $boxData[] = [
+                'id' => $box->getId(),
+                'client_nom' => $item['client_nom'],
+                'poids' => $box->getPoids(),
+                'prix' => $box->getPrix(),
+                'score' => $box->getScore(),
+                'valide' => $box->isValide(),
+                'articles' => $articlesDTO
+            ];
+        }
+        return $boxData;
+    }
 }

@@ -284,15 +284,6 @@ class Repository
         );
     }
 
-    public function validerBox(mixed $id)
-    {
-        $sql = "UPDATE box SET valide = TRUE WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-        $stmt->execute();
-        return true;
-    }
-
     public function findAllCampagnes()
     {
         $sql = "SELECT * FROM campagne";
@@ -304,5 +295,36 @@ class Repository
             $campagnes[] = new Campagne($campagne['poids_max'], $campagne['prix_min'], $campagne['prix_max'], $campagne['id']);
         }
         return $campagnes;
+    }
+
+    public function findAllBoxesWithClient(): array
+    {
+        // Join with utilisateur to get client names
+        $sql = "SELECT b.*, u.nom as client_nom FROM box b 
+                JOIN utilisateur u ON b.id_client = u.id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $results = [];
+        foreach ($rows as $row) {
+            $box = new Box($row['id_client'], (float)$row['poids'], (float)$row['prix'], (int)$row['score']);
+            $box->setId($row['id']);
+            $box->setValide((bool)$row['valide']);
+            $results[] = [
+                'box' => $box,
+                'client_nom' => $row['client_nom']
+            ];
+        }
+        return $results;
+    }
+
+    public function updateBoxValidationStatus(string $boxId, bool $valide): bool
+    {
+        $sql = "UPDATE box SET valide = :valide WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':valide', $valide, PDO::PARAM_BOOL);
+        $stmt->bindValue(':id', $boxId, PDO::PARAM_STR);
+        return $stmt->execute();
     }
 }

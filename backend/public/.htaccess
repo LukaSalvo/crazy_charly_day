@@ -1,11 +1,10 @@
 RewriteEngine On
-#
-# RewriteBase indispensable sur webetu :
 
+# Preserve Authorization Header
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
-#
-# réécriture pour slim
-
+# Rewrite for Slim
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]

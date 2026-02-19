@@ -25,14 +25,18 @@ class SimpleAuthMiddleware implements MiddlewareInterface
         $authHeader = $request->getHeaderLine('Authorization');
 
         if (!$authHeader || !str_starts_with($authHeader, 'Bearer ')) {
-            return $this->errorResponse('Authentification requise', 401);
+            return $this->errorResponse('Header Authorization (Bearer) manquant', 401);
         }
 
         $token = substr($authHeader, 7);
+        if (!$token || $token === 'null' || $token === 'undefined') {
+            return $this->errorResponse('Token manquant ou invalide (string null)', 401);
+        }
+
         $decoded = $this->jwtManager->decodeToken($token);
 
         if (!$decoded) {
-            return $this->errorResponse('Token invalide ou expiré', 401);
+            return $this->errorResponse('Token invalide ou signature incorrecte (Secret mismatch?)', 401);
         }
 
         $user = (object)$decoded['user'];

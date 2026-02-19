@@ -12,6 +12,7 @@ import BackDashboardView from '../views/back/DashboardView.vue'
 import CatalogueView from '../views/back/CatalogueView.vue'
 import SubscribersView from '../views/back/SubscribersView.vue'
 import CampaignView from '../views/back/CampaignView.vue'
+import BoxesView from '../views/back/BoxesView.vue'
 
 const routes = [
   { path: '/', component: HomeView },
@@ -38,6 +39,11 @@ const routes = [
   { 
     path: '/back/campagne', 
     component: CampaignView, 
+    meta: { requiresAuth: true, requiresAdmin: true } 
+  },
+  { 
+    path: '/back/boxes', 
+    component: BoxesView, 
     meta: { requiresAuth: true, requiresAdmin: true } 
   },
 ]

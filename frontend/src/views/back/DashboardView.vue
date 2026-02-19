@@ -20,6 +20,9 @@ import { RouterLink } from 'vue-router'
         <RouterLink to="/back/campagne" class="card nav-card">
           <h2>Campagnes</h2>
         </RouterLink>
+        <RouterLink to="/back/boxes" class="card nav-card">
+          <h2>Gestion des Box</h2>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -32,4 +35,5 @@ import { RouterLink } from 'vue-router'
 .nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .nav-card { text-align: center; padding: 2rem; }
 @media (max-width: 600px) { .nav-grid { grid-template-columns: 1fr; } }
+
 </style>

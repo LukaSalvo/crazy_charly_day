@@ -2,6 +2,8 @@
 
 use Psr\Container\ContainerInterface;
 use toybox\api\actions\ListerBoxAction;
+use toybox\api\actions\ListerToutesLesBoxAction;
+use toybox\api\actions\ValiderBoxAction;
 use toybox\api\providers\JWTManager;
 use toybox\core\application\usecases\Service;
 use toybox\infra\repositories\Repository;
@@ -35,5 +37,13 @@ return [
 
     ListerBoxAction::class => function (ContainerInterface $container) {
         return new ListerBoxAction($container->get(Service::class));
+    },
+
+    ListerToutesLesBoxAction::class => function (ContainerInterface $container) {
+        return new ListerToutesLesBoxAction($container->get(Service::class));
+    },
+
+    ValiderBoxAction::class => function (ContainerInterface $container) {
+        return new ValiderBoxAction($container->get(Service::class));
     }
 ];

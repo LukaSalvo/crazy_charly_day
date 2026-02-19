@@ -7,6 +7,7 @@ use toybox\api\actions\ListerAbonnesAction;
 use toybox\api\actions\ListerArticlesAction;
 use toybox\api\actions\ListerBoxAction;
 use toybox\api\actions\ListerCampagneAction;
+use toybox\api\actions\ListerToutesLesBoxAction;
 use toybox\api\actions\LoginAction;
 use toybox\api\actions\RegisterAction;
 use toybox\api\actions\SupprimerAbonneAction;
@@ -38,6 +39,8 @@ return function (App $app): App {
         $app->get('/abonnes', ListerAbonnesAction::class)->setName('lister_abonnes');
         $app->delete('/abonnes/{id}', SupprimerAbonneAction::class)->setName('supprimer_abonne');
         $app->post('/campagnes', CreerCampagneAction::class)->setName('creer_campagne');
+        $app->get('/boxes', ListerToutesLesBoxAction::class)->setName('admin_lister_boxes');
+        $app->post('/boxes/{id}/valider', ValiderBoxAction::class)->setName('admin_valider_box');
     };
 
     // Apply Admin Middleware to these routes
