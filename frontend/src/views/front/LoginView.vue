@@ -13,7 +13,7 @@ async function submit() {
   success.value = ''
 
   try {
-    const res = await fetch('http://localhost:8082/auth/register', {
+    const res = await fetch('http://localhost:8082/auth/login', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ email: email.value, password: password.value }),
@@ -22,18 +22,18 @@ async function submit() {
     const data = await res.json()
 
     if (!res.ok) {
-      error.value = data.error ?? 'Erreur lors de l\'inscription'
+      error.value = data.error ?? 'Identifiants incorrects'
       return
     }
 
     localStorage.setItem('token', data.token)
     localStorage.setItem('user',  JSON.stringify(data.user))
     
-    success.value = 'Compte créé avec succès !'
+    success.value = 'Connexion réussie !'
     
     setTimeout(() => {
       router.push('/')
-    }, 1500)
+    }, 1000)
   } catch (err) {
     error.value = "Erreur de connexion au serveur"
   }
@@ -45,8 +45,8 @@ async function submit() {
     <div class="card auth-card fade-up">
       <router-link to="/" class="back-link">← Retour à l'accueil</router-link>
       <div class="auth-header">
-        <h1>Nous rejoindre</h1>
-        <p>Créez votre compte pour recevoir vos premières box de jouets.</p>
+        <h1>Bon retour !</h1>
+        <p>Entrez vos identifiants pour accéder à votre box.</p>
       </div>
 
       <div v-if="error"   class="alert alert-error">{{ error }}</div>
@@ -54,23 +54,22 @@ async function submit() {
 
       <form @submit.prevent="submit" class="auth-form">
         <div class="form-group">
-          <label>Adresse e-mail</label>
+          <label>Email professionnel ou personnel</label>
           <input v-model="email" type="email" required placeholder="votre@email.com" />
         </div>
         <div class="form-group">
           <label>Mot de passe</label>
-          <input v-model="password" type="password" required placeholder="Min. 8 caractères" />
-          <p class="input-hint">Utilisez un mot de passe sécurisé.</p>
+          <input v-model="password" type="password" required placeholder="••••••••" />
         </div>
 
         <button type="submit" class="btn btn-primary w-full">
-          S'inscrire gratuitement
+          Se connecter
         </button>
       </form>
       
       <div class="auth-footer">
-        Déjà un compte ? 
-        <router-link to="/front/connexion">Se connecter</router-link>
+        Pas encore de compte ? 
+        <router-link to="/front/inscription">Créer un compte</router-link>
       </div>
     </div>
   </div>
@@ -89,8 +88,6 @@ async function submit() {
 .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; font-weight: 600; text-align: center; }
 .alert-error { background: #fee2e2; color: #991b1b; }
 .alert-success { background: #dcfce7; color: #166534; }
-
-.input-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
 
 .w-full { width: 100%; }
 

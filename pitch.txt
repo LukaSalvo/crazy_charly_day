@@ -1,8 +1,11 @@
 Paul — Le Visage et l'Expérience (Frontend)
 
-"Bonjour, je m'appelle Paul. Mon rôle a été de créer tout ce que les utilisateurs voient et utilisent sur leur écran. Pour ça, j'ai utilisé Vue.js.
+"Bonjour, je m'appelle Paul. Mon rôle a été de créer tout ce que les utilisateurs voient et utilisent sur leur écran.
+ Pour ça, j'ai utilisé Vue.js.
+Imaginez que l'application est un magasin : 
+j'ai dessiné la vitrine et les rayons. 
 
-Imaginez que l'application est un magasin : j'ai dessiné la vitrine et les rayons. Pour les parents, j'ai conçu un parcours d'inscription ultra-simple où ils peuvent classer leurs préférences de jouets comme on crée une playlist de musique. Pour Charly, le patron, j'ai construit une arrière-boutique (le back-office) qui lui permet de voir ses stocks et de lancer ses livraisons en un clic. Mon but, c'était que l'appli soit fluide, jolie et surtout facile à utiliser, même quand on est un parent pressé."
+
 
 
 
@@ -17,3 +20,4 @@ Si Paul a fait le menu, nous, on est en cuisine. On a mis en place un système q
 Et moi, c'est Luka. Mon travail, c'est de faire en sorte que le site de Paul et le cerveau de Mathieu s'entendent parfaitement sur n'importe quel ordinateur.
 
 Pour ça, j'ai utilisé Docker. Imaginez que l'application est un kit de meubles en kit : j'ai tout mis dans des boîtes séparées (les conteneurs) pour que tout soit bien rangé. Grâce à mon travail, on n'a plus besoin d'installer 50 logiciels pour faire marcher le projet. On claque des doigts (ou on tape une commande), et tout s'allume en même temps, que ce soit sur mon Mac ou sur le PC de l'école. Je suis le garant de la stabilité technique de l'équipe."
+

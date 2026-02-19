@@ -6,14 +6,14 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 class JWTManager
 {
-    public function createAccessToken($p)
+    public function createAccessToken($user)
     {
         $payload['user'] = [
-            'id' => $p->id,
-            'email' => $p->email,
-            'role' => $p->role
+            'id'    => $user->getId(),
+            'email' => $user->getEmail(),
+            'role'  => $user->getRole(),
         ];
-        $payload['exp'] = time() + 15*60;
+        $payload['exp'] = time() + 15 * 60;
         return JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
     }
 
