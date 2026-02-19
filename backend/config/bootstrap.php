@@ -1,6 +1,7 @@
 <?php
 
 use Slim\Factory\AppFactory;
+use toybox\api\middlewares\CorsMiddleware;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();

@@ -1,0 +1,31 @@
+<?php
+
+namespace toybox\api\providers;
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+class JWTManager
+{
+    public function createAccessToken($p)
+    {
+        $payload['user'] = [
+            'id' => $p->id,
+            'email' => $p->email,
+            'role' => $p->role
+        ];
+        $payload['exp'] = time() + 15*60;
+        return JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+    }
+
+    public function createRefreshToken(array $payload)
+    {
+        $payload['exp'] = time() + 7 * 24 * 60 * 60;
+        $refreshToken = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
+        return $refreshToken;
+    }
+
+    public function decodeToken($token)
+    {
+        //a completer
+    }
+}
