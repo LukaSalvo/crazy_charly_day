@@ -69,7 +69,7 @@ class Repository
         return $etat;
     }
 
-    public function DeleteArticleById(string $id){
+    public function deleteArticleById(string $id){
         try {
             $sql = "DELETE FROM article WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
@@ -78,6 +78,20 @@ class Repository
         }catch (\Throwable $th){
             return false;
         }
+        return true;
+    }
+
+    public function ajouterArticle(Article $article){
+        $sql = "INSERT INTO article (id, designation, id_categ, id_age, id_etat, prix, poids) VALUES (:id, :designation, :id_categ, :id_age, :id_etat, :prix, :poids)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $article->getId(), PDO::PARAM_STR);
+        $stmt->bindValue(':designation', $article->getDesignation(), PDO::PARAM_STR);
+        $stmt->bindValue(':id_categ', $article->getIdCategorie(), PDO::PARAM_INT);
+        $stmt->bindValue(':id_age', $article->getIdAge(), PDO::PARAM_INT);
+        $stmt->bindValue(':id_etat', $article->getIdEtat(), PDO::PARAM_INT);
+        $stmt->bindValue(':prix', $article->getPrix(), PDO::PARAM_STR);
+        $stmt->bindValue(':poids', $article->getPoids(), PDO::PARAM_STR);
+        $stmt->execute();
         return true;
     }
 }

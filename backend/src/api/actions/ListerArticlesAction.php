@@ -14,7 +14,7 @@ class ListerArticlesAction{
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args){
-        $articles = $this->service->ListerArticles();
+        $articles = $this->service->listerArticles();
         $response->getBody()->write(json_encode($articles, JSON_PRETTY_PRINT));
         return $response
             ->withHeader('Content-Type', 'application/json')

@@ -2,7 +2,9 @@
 
 namespace toybox\core\application\usecases;
 
+use toybox\core\application\ports\api\dtos\AjoutArticleDTO;
 use toybox\core\application\ports\api\dtos\ArticleDTO;
+use toybox\core\domain\entities\Article;
 use toybox\infra\repositories\Repository;
 
 class Service
@@ -13,7 +15,7 @@ class Service
         $this->repository = $repository;
     }
 
-    public function ListerArticles(){
+    public function listerArticles(){
         $articles = $this->repository->findAllArticles();
         $articlesDTO = [];
         foreach($articles as $article){
@@ -31,9 +33,24 @@ class Service
         return $articlesDTO;
     }
 
-    public function SupprimerArticle(string $id): bool
+    public function supprimerArticle(string $id): bool
     {
-        return $this->repository->DeleteArticleById($id);
+        return $this->repository->deleteArticleById($id);
+    }
+
+    public function AjouterArticle(AjoutArticleDTO $articleDTO)
+    {
+        $article = new Article(
+            $articleDTO->id,
+            $articleDTO->designation,
+            $articleDTO->categorie,
+            $articleDTO->age,
+            $articleDTO->etat,
+            $articleDTO->prix,
+            $articleDTO->poids
+        );
+        $this->repository->ajouterArticle($article);
+        return true;
     }
 
 }
