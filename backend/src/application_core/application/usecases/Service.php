@@ -65,12 +65,20 @@ class Service
         foreach($abonnes as $abonne){
             $categories = $this->repository->findCategoriesByClient($abonne->getId());
             $id_age = $this->repository->findAgeByClient($abonne->getId());
-            $age = $this->repository->findAgeById($id_age)->getLibelle();
+            $age_label = 'Non renseigné';
+            if ($id_age !== null) {
+                try {
+                    $age_obj = $this->repository->findAgeById((int)$id_age);
+                    $age_label = $age_obj ? $age_obj->getLibelle() : 'Inconnu';
+                } catch (\Exception $e) {
+                    $age_label = 'Invalide';
+                }
+            }
             $abonnesDTO[] = new AbonneDTO(
                 $abonne->getId(),
                 $abonne->getNom(),
                 $abonne->getEmail(),
-                $age,
+                $age_label,
                 $categories);
         }
         return $abonnesDTO;
@@ -162,27 +170,28 @@ class Service
         return $score;
     }
 
-    public function ListerBox()
+    public function listerBoxUser(string $clientId): array
     {
-        $boxs = $this->repository->findAllBox();
-        $boxsDTO = [];
-        foreach($boxs as $box){
-            $articles = $this->repository->findArticlesByBoxe($box->getId());
-            $articlesDTO = [];
-            foreach($articles as $id_article){
-                $article = $this->repository->findArticles($id_article);
-                $articlesDTO[] = new ArticleDTO($article->getId(),
+        $box = $this->repository->findBoxByClientId($clientId);
+        if (!$box) return [];
+
+        $articles = $this->repository->findArticlesByBoxId($box->getId());
+        $articlesDTO = [];
+
+        foreach($articles as $article){
+            $categorie = $this->repository->findCategorieById($article->getIdCategorie());
+            $etat = $this->repository->findEtatById($article->getIdEtat());
+            $age = $this->repository->findAgeById($article->getIdAge());
+            $articlesDTO[] = new ArticleDTO(
+                $article->getId(),
                 $article->getDesignation(),
-                $article->getIdCategorie(),
-                $article->getIdAge(),
-                $article->getIdEtat(),
+                $categorie->getLibelle(),
+                $age->getLibelle(),
+                $etat->getLibelle(),
                 $article->getPrix(),
-                $article->getPoids());
-            }
-            $boxsDTO[] = new BoxDTO($box->getId(), $box->getPoids(), $box->getPrix(), $box->getScore(), $articlesDTO);
+                $article->getPoids()
+            );
         }
-        return $boxsDTO;
+        return $articlesDTO;
     }
-
-
 }

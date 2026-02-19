@@ -10,14 +10,17 @@ class ListerBoxAction
 {
     private Service $service;
 
-    public function __construct(Service $service){
+    public function __construct(Service $service)
+    {
         $this->service = $service;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $args)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $boxs = $this->service->ListerBox();
-        $response->getBody()->write(json_encode($boxs, JSON_PRETTY_PRINT));
+        $idClient = $args['id'];
+        $boxArticles = $this->service->listerBoxUser($idClient);
+
+        $response->getBody()->write(json_encode($boxArticles));
         return $response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(200);

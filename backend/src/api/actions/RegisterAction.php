@@ -39,7 +39,7 @@ class RegisterAction
 
         // Créer l'utilisateur
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $user = $this->userRepository->create($email, $hash);
+        $user = $this->userRepository->create($email, $hash, $email);
 
         // Générer le token
         $token = $this->jwtManager->createAccessToken($user);

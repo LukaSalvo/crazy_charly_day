@@ -14,23 +14,50 @@ import SubscribersView from '../views/back/SubscribersView.vue'
 import CampaignView from '../views/back/CampaignView.vue'
 
 const routes = [
-  // Accueil
   { path: '/', component: HomeView },
-
-  // Front-office (abonnés)
   { path: '/front/inscription', component: RegisterView },
   { path: '/front/connexion', component: LoginView },
-  { path: '/front/ma-box', component: BoxView },
-  { path: '/front/preferences', component: PreferencesView },
+  { path: '/front/ma-box', component: BoxView, meta: { requiresAuth: true } },
+  { path: '/front/preferences', component: PreferencesView, meta: { requiresAuth: true } },
 
-  // Back-office (gestion)
-  { path: '/back', component: BackDashboardView },
-  { path: '/back/catalogue', component: CatalogueView },
-  { path: '/back/abonnes', component: SubscribersView },
-  { path: '/back/campagne', component: CampaignView },
+  { 
+    path: '/back', 
+    component: BackDashboardView, 
+    meta: { requiresAuth: true, requiresAdmin: true } 
+  },
+  { 
+    path: '/back/catalogue', 
+    component: CatalogueView, 
+    meta: { requiresAuth: true, requiresAdmin: true } 
+  },
+  { 
+    path: '/back/abonnes', 
+    component: SubscribersView, 
+    meta: { requiresAuth: true, requiresAdmin: true } 
+  },
+  { 
+    path: '/back/campagne', 
+    component: CampaignView, 
+    meta: { requiresAuth: true, requiresAdmin: true } 
+  },
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const user = JSON.parse(localStorage.getItem('user') || 'null')
+
+  if (to.meta.requiresAuth && !token) {
+    next('/front/connexion')
+  } else if (to.meta.requiresAdmin && (!user || user.role !== 'admin')) {
+    next('/')
+  } else {
+    next()
+  }
+})
+
+export default router

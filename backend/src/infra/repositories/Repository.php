@@ -128,12 +128,13 @@ class Repository
         $rows = $stmt->fetchAll();
         $clients = [];
         foreach($rows as $row){
+            $role = $row['admin'] ? 'admin' : 'abonne';
             $clients[] = new User(
-                $row['id'],
-                $row['nom'],
-                $row['mail'],
-                $row['mdp'],
-                $row['admin']
+                (string)$row['id'],
+                (string)($row['nom'] ?? ''),
+                (string)$row['mail'],
+                (string)$row['mdp'],
+                $role
             );
         }
         return $clients;
@@ -143,9 +144,10 @@ class Repository
     {
         $sql = "SELECT * FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $getId, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $getId, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch();
+        if (!$row) return [null, null, null, null, null, null];
         $categories = [$row['categ_1'], $row['categ_2'], $row['categ_3'], $row['categ_4'], $row['categ_5'], $row['categ_6']];
         return $categories;
     }
@@ -154,9 +156,10 @@ class Repository
     {
         $sql = "SELECT age FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $getId, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $getId, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch();
+        if (!$row) return null;
         return $row['age'];
     }
 
@@ -164,7 +167,7 @@ class Repository
     {
         $sql = "DELETE FROM utilisateur WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->execute();
         return true;
     }
@@ -173,7 +176,7 @@ class Repository
     {
         $sql = "DELETE FROM client WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->execute();
         return true;
     }
@@ -223,48 +226,43 @@ class Repository
         $stmt->execute();
     }
 
-    public function findAllBox()
+    public function findBoxByClientId(string $clientId): ?Box
     {
-        $sql = "SELECT * FROM box";
+        $sql = "SELECT * FROM box WHERE id_client = :id_client LIMIT 1";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id_client', $clientId, PDO::PARAM_STR);
         $stmt->execute();
-        $rows = $stmt->fetchAll();
-        $boxes = [];
-        foreach($rows as $row){
-            $boxes[] = new Box($row['id_client'], $row['poids'], $row['prix'], $row['score']);
-        }
-        return $boxes;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) return null;
+
+        $box = new Box($row['id_client'], (float)$row['poids'], (int)$row['score'], (float)$row['prix']);
+        $box->setId($row['id']);
+        return $box;
     }
 
-    public function findArticlesByBoxe($getId)
+    public function findArticlesByBoxId(string $boxId): array
     {
-        $sql = "SELECT * FROM boxobj WHERE id_box = :id";
+        $sql = "SELECT a.* FROM article a 
+                JOIN boxobj bo ON a.id = bo.id_article 
+                WHERE bo.id_box = :id_box";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $getId, PDO::PARAM_STR);
+        $stmt->bindValue(':id_box', $boxId, PDO::PARAM_STR);
         $stmt->execute();
-        $rows = $stmt->fetchAll();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         $articles = [];
-        foreach($rows as $row){
-            $articles[] = $row['id_article'];
+        foreach ($rows as $article) {
+            $articles[] = new Article(
+                $article['id'],
+                $article['designation'],
+                $article['id_categ'],
+                $article['id_age'],
+                $article['id_etat'],
+                (float)$article['prix'],
+                (float)$article['poids']
+            );
         }
         return $articles;
-    }
-
-    public function findArticles(mixed $id_article)
-    {
-        $sql = "SELECT * FROM article WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id_article, PDO::PARAM_STR);
-        $stmt->execute();
-        $row = $stmt->fetch();
-        return new Article(
-            $row['id'],
-            $row['designation'],
-            $row['id_categ'],
-            $row['id_age'],
-            $row['id_etat'],
-            $row['prix'],
-            $row['poids']
-        );
     }
 }
