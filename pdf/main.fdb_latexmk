@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1771534716.08619 "/Users/lukasalvo/Documents/BUT/3_Annee/crazy_charly_day/pdf/main.tex" "main.pdf" "main" 1771534716.90978 0
-  "/Users/lukasalvo/Documents/BUT/3_Annee/crazy_charly_day/pdf/main.tex" 1771534715.84015 7578 e6b2504394937d95d24713c174e55cf8 ""
+["pdflatex"] 1771534972.16125 "/Users/lukasalvo/Documents/BUT/3_Annee/crazy_charly_day/pdf/main.tex" "main.pdf" "main" 1771534972.9589 0
+  "/Users/lukasalvo/Documents/BUT/3_Annee/crazy_charly_day/pdf/main.tex" 1771534971.92889 7700 d399dc8b5ec81607f2d57f121fadc7b3 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1741388039 2971 def0b6c1f0b107b3b936def894055589 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/fontname/texfonts.map" 1741388039 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/opt/homebrew/Cellar/texlive/20250308_2/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map" 1741388039 5466553 2748998d7db8078826afa1f272036265 ""
@@ -92,10 +92,10 @@
   "img/Capture d’écran 2026-02-19 à 14.32.31.png" 1771507957.76134 328050 41580088e3c952af7a16dad73d70ab18 ""
   "img/logo_iut.png" 1771492280.5795 4325 7f01ab95c7520f251dffa6add5037b5e ""
   "img/logo_toys_academi.png" 1771508767.40563 423629 3a5ce11b5d85d3b580da541da0af6193 ""
-  "main.aux" 1771534716.82072 1705 e2aa1b7f134fec98d8663b229fab0bd5 "pdflatex"
-  "main.out" 1771534716.82156 1743 00d1356fabb9d840e72c13750349a296 "pdflatex"
-  "main.tex" 1771534715.84015 7578 e6b2504394937d95d24713c174e55cf8 ""
-  "main.toc" 1771534716.82179 924 123ec94f07dfc52f1227cfecb8e2085a "pdflatex"
+  "main.aux" 1771534972.88429 1705 e2aa1b7f134fec98d8663b229fab0bd5 "pdflatex"
+  "main.out" 1771534972.88496 1743 00d1356fabb9d840e72c13750349a296 "pdflatex"
+  "main.tex" 1771534971.92889 7700 d399dc8b5ec81607f2d57f121fadc7b3 ""
+  "main.toc" 1771534972.88521 924 123ec94f07dfc52f1227cfecb8e2085a "pdflatex"
   (generated)
   "main.aux"
   "main.log"
