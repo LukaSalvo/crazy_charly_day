@@ -2,6 +2,7 @@
 
 namespace toybox\core\application\usecases;
 
+use toybox\core\application\ports\api\dtos\AbonneDTO;
 use toybox\core\application\ports\api\dtos\AjoutArticleDTO;
 use toybox\core\application\ports\api\dtos\ArticleDTO;
 use toybox\core\domain\entities\Article;
@@ -51,6 +52,23 @@ class Service
         );
         $this->repository->ajouterArticle($article);
         return true;
+    }
+
+    public function listerAbonnes(){
+        $abonnes = $this->repository->findAllClient();
+        $abonnesDTO = [];
+        foreach($abonnes as $abonne){
+            $categories = $this->repository->findCategoriesByClient($abonne->getId());
+            $id_age = $this->repository->findAgeByClient($abonne->getId());
+            $age = $this->repository->findAgeById($id_age)->getLibelle();
+            $abonnesDTO[] = new AbonneDTO(
+                $abonne->getId(),
+                $abonne->getNom(),
+                $abonne->getEmail(),
+                $age,
+                $categories);
+        }
+        return $abonnesDTO;
     }
 
 }

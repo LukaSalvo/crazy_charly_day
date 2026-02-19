@@ -2,6 +2,7 @@
 
 use Slim\App;
 use toybox\api\actions\AjouterArticleAction;
+use toybox\api\actions\ListerAbonnesAction;
 use toybox\api\actions\ListerArticlesAction;
 use toybox\api\actions\SupprimerArticleAction;
 use toybox\api\middlewares\AjouterArticleMiddleware;
@@ -24,6 +25,8 @@ return function (App $app): App {
         return $response;
     });
     $app->delete('/articles/{id}', SupprimerArticleAction::class)->setName('supprimer_article');
+
+    $app->get('/abonnes', ListerAbonnesAction::class)->setName('lister_abonnes');
 
     return $app;
 };

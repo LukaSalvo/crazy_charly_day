@@ -39,4 +39,5 @@ class UserRepository
 
         return new User($id, $email, $passwordHash, 'abonne');
     }
+
 }

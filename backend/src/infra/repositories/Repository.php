@@ -7,6 +7,7 @@ use toybox\core\domain\entities\Age;
 use toybox\core\domain\entities\Article;
 use toybox\core\domain\entities\Categorie;
 use toybox\core\domain\entities\Etat;
+use toybox\core\domain\entities\User;
 
 class Repository
 {
@@ -93,5 +94,44 @@ class Repository
         $stmt->bindValue(':poids', $article->getPoids(), PDO::PARAM_STR);
         $stmt->execute();
         return true;
+    }
+
+    public function findAllClient(){
+        $sql = "SELECT * FROM utilisateur WHERE admin = FALSE";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $clients = [];
+        foreach($rows as $row){
+            $clients[] = new User(
+                $row['id'],
+                $row['nom'],
+                $row['mail'],
+                $row['mdp'],
+                $row['admin']
+            );
+        }
+        return $clients;
+    }
+
+    public function findCategoriesByClient($getId)
+    {
+        $sql = "SELECT * FROM client WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $getId, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $categories = [$row['categ_1'], $row['categ_2'], $row['categ_3'], $row['categ_4'], $row['categ_5'], $row['categ_6']];
+        return $categories;
+    }
+
+    public function findAgeByClient($getId)
+    {
+        $sql = "SELECT age FROM client WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $getId, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['age'];
     }
 }
