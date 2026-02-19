@@ -19,6 +19,12 @@ use toybox\api\providers\JWTManager;
 return function (App $app): App {
 
     // Auth logic
+    $app->options('/auth/register', function ($request, $response) {
+        return $response;
+    });
+    $app->options('/auth/login', function ($request, $response) {
+        return $response;
+    });
     $app->post('/auth/register', RegisterAction::class)->setName('register');
     $app->post('/auth/login', LoginAction::class)->setName('login');
 
@@ -42,16 +48,7 @@ return function (App $app): App {
     $app->get('/abonnes/{id}/box', ListerBoxAction::class)
         ->add(new SimpleAuthMiddleware($jwtManager, 'abonne'))
         ->setName('lister_box_user');
-
-    // CORS preflight
-    $app->options('/{routes:.+}', function ($request, $response) {
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
-            ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-            ->withStatus(200);
-    });
-    $app->post('/campagnes', CreerCampagneAction::class)->setName('creer_campagne');
+    
     $app->get('/boxes', ListerBoxAction::class)->setName('lister_boxes');
     $app->options('/boxes/{id}', function ($request, $response) {
         return $response;
