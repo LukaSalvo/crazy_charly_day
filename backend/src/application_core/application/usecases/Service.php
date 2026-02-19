@@ -79,10 +79,9 @@ class Service
     {
         $res2 = $this->repository->supprimerClient($id);
         $res = $this->repository->supprimerUtilisateur($id);
-        return ($res && $res2);
+        return  ($res && $res2);
     }
 
-}
 	public function creerCampagne(float $poids, float $prix_min, float $prix_max){
         $clients = $this->repository->findAllClients();
 
@@ -90,10 +89,8 @@ class Service
         $this->repository->createCampagne($campagne);
 
         foreach ($clients as $client){
-            if($client->getAbonne()){
-                $box_id = $this->creerBox($client, $campagne);
-                $this->repository->createBoxCampagne($box_id, $campagne->getId());
-            }
+            $box_id = $this->creerBox($client, $campagne);
+            $this->repository->createBoxCampagne($box_id, $campagne->getId());
         }
 	}
 
@@ -133,7 +130,7 @@ class Service
         $box = new Box($client->getId(), $poids_total, $score_total, $prix_total);
         $box->setId($id_box);
         $this->repository->createBox($box);
-        return 'test';
+        return $id_box;
     }
 
     private function calculerScore(Article $article, Client $client):float {

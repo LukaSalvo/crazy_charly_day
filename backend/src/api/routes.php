@@ -2,6 +2,7 @@
 
 use Slim\App;
 use toybox\api\actions\AjouterArticleAction;
+use toybox\api\actions\CreerCampagneAction;
 use toybox\api\actions\ListerAbonnesAction;
 use toybox\api\actions\ListerArticlesAction;
 use toybox\api\actions\SupprimerAbonneAction;
@@ -33,6 +34,11 @@ return function (App $app): App {
         return $response;
     });
     $app->delete('/abonnes/{id}', SupprimerAbonneAction::class)->setName('supprimer_abonne');
+
+    $app->options('/campagnes', function ($request, $response) {
+        return $response;
+    });
+    $app->post('/campagnes', CreerCampagneAction::class)->setName('creer_campagne');
 
     return $app;
 };

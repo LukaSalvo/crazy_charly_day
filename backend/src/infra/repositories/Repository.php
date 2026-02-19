@@ -56,8 +56,7 @@ class Repository
                 $client['categ_3'],
                 $client['categ_4'],
                 $client['categ_5'],
-                $client['categ_6'],
-                $client['abonne']
+                $client['categ_6']
             );
         }
         return $clients;
@@ -178,7 +177,6 @@ class Repository
         $stmt->execute();
         return true;
     }
-}
     public function createCampagne(Campagne  $campagne){
         $sql = "INSERT INTO campagne VALUES (:id, :poids, :prix_min, :prix_max)";
         $stmt = $this->pdo->prepare($sql);
@@ -194,7 +192,7 @@ class Repository
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id', $box->getId(), PDO::PARAM_STR);
         $stmt->bindValue(':id_client', $box->getIdClient(), PDO::PARAM_STR);
-        $stmt->bindValue(':poids', $box->getPoidsMax(), PDO::PARAM_STR);
+        $stmt->bindValue(':poids', $box->getPoids(), PDO::PARAM_STR);
         $stmt->bindValue(':prix', $box->getPrix(), PDO::PARAM_STR);
         $stmt->bindValue(':score', $box->getScore(), PDO::PARAM_INT);
         $stmt->execute();

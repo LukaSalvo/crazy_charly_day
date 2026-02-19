@@ -6,15 +6,14 @@ class Client
 {
     private string $id;
     private int $age;
-    private int $categ_1;
-    private int $categ_2;
-    private int $categ_3;
-    private int $categ_4;
-    private int $categ_5;
-    private int $categ_6;
-	private bool $abonne;
+    private ?int $categ_1;
+    private ?int $categ_2;
+    private ?int $categ_3;
+    private ?int $categ_4;
+    private ?int $categ_5;
+    private ?int $categ_6;
 
-    public function __construct(string $id, int $age, int $categ_1, int $categ_2, int $categ_3, int $categ_4, int $categ_5, int $categ_6, bool $abonne){
+    public function __construct(string $id, int $age, ?int $categ_1, ?int $categ_2, ?int $categ_3, ?int $categ_4, ?int $categ_5, ?int $categ_6){
         $this->id = $id;
         $this->age = $age;
         $this->categ_1 = $categ_1;
@@ -23,7 +22,6 @@ class Client
         $this->categ_4 = $categ_4;
         $this->categ_5 = $categ_5;
         $this->categ_6 = $categ_6;
-        $this->abonne = $abonne;
     }
 
     public function getId():string{
@@ -49,8 +47,5 @@ class Client
     }
     public function getCateg6():int{
         return $this->categ_6;
-    }
-    public function getAbonne():bool{
-        return $this->abonne;
     }
 }
