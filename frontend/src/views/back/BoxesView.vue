@@ -9,7 +9,7 @@ async function fetchBoxes() {
   loading.value = true
   const token = localStorage.getItem('token')
   try {
-    const res = await fetch('http://localhost:8082/boxes', {
+    const res = await fetch('https://back.cesareuh.fr/boxes', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -29,7 +29,7 @@ async function fetchBoxes() {
 
 async function validateBox(id) {
   try {
-    const res = await fetch(`http://localhost:8082/boxes/${id}/valider`, {
+    const res = await fetch(`https://back.cesareuh.fr/boxes/${id}/valider`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
