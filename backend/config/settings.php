@@ -3,12 +3,11 @@
 return [
     'settings' => [
         'db' => [
-            'driver' => $_ENV['DB_DRIVER'],
-            'host' => $_ENV['DB_HOST'],
-            'port' => $_ENV['DB_PORT'],
-            'database' => $_ENV['DB_DATABASE'],
-            'username' => $_ENV['DB_USERNAME'],
-            'password' => $_ENV['DB_PASSWORD'],
+            'driver' => $_ENV['db.driver'],
+            'host' => $_ENV['db.host'],
+            'database' => $_ENV['db.database'],
+            'username' => $_ENV['db.username'],
+            'password' => $_ENV['db.password'],
         ],
         'cors' => [
             'origin' => [$_ENV['url']],
