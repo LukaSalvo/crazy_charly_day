@@ -1,6 +1,6 @@
 <?php
 
-namespace toybox\domain\entities;
+namespace toybox\core\domain\entities;
 
 class Article
 {

@@ -23,7 +23,7 @@
     "psr-4": {
       "toybox\\api\\": "src/api",
       "toybox\\core\\": "src/application_core",
-      "toybox\\infra\\": "src/infrastructure"
+      "toybox\\infra\\": "src/infra"
     }
   }
 }
