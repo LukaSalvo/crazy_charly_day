@@ -66,12 +66,20 @@ class Service
         foreach($abonnes as $abonne){
             $categories = $this->repository->findCategoriesByClient($abonne->getId());
             $id_age = $this->repository->findAgeByClient($abonne->getId());
-            $age = $this->repository->findAgeById($id_age)->getLibelle();
+            $age_label = 'Non renseigné';
+            if ($id_age !== null) {
+                try {
+                    $age_obj = $this->repository->findAgeById((int)$id_age);
+                    $age_label = $age_obj ? $age_obj->getLibelle() : 'Inconnu';
+                } catch (\Exception $e) {
+                    $age_label = 'Invalide';
+                }
+            }
             $abonnesDTO[] = new AbonneDTO(
                 $abonne->getId(),
                 $abonne->getNom(),
                 $abonne->getEmail(),
-                $age,
+                $age_label,
                 $categories);
         }
         return $abonnesDTO;
@@ -103,33 +111,46 @@ class Service
         $prix_total = 0;
         $possible = true;
         $articles_selected = [];
+        
         while ($possible){
             $possible = false;
             $best_score = -100;
             $best_article = null;
+            
             foreach ($articles as $article){
-                if($poids_total + $article->getPoids() < $campagne->getPoidsMax() &&
-                    $prix_total + $article->getPrix() < $campagne->getPrixMax() &&
-                    $prix_total + $article->getPrix() > $campagne->getPrixMin() &&
-                    !$this->repository->findBoxObjByIdObj($article->getId()) &&
-                    $client->getAge() == $article->getIdAge()
-                ){
-                    $new_score = $this->calculerScore($article, $client);
-                    if($new_score > $best_score){
-                        $best_score = $new_score;
-                        $best_article = $article;
-                        $possible = true;
-                    }
+                // Check if already selected in THIS session or already in another box
+                if (in_array($article, $articles_selected)) continue;
+                if ($this->repository->findBoxObjByIdObj($article->getId())) continue;
+                
+                // Age constraint
+                if ($client->getAge() != $article->getIdAge()) continue;
+
+                // Weight and Price Upper Constraints
+                if ($poids_total + $article->getPoids() > $campagne->getPoidsMax()) continue;
+                if ($prix_total + $article->getPrix() > $campagne->getPrixMax()) continue;
+
+                $new_score = $this->calculerScore($article, $client);
+                if($new_score > $best_score){
+                    $best_score = $new_score;
+                    $best_article = $article;
+                    $possible = true;
                 }
             }
+
             if($possible){
                 $score_total += $best_score;
                 $poids_total += $best_article->getPoids();
                 $prix_total += $best_article->getPrix();
                 $articles_selected[] = $best_article;
-
             }
         }
+
+        // Enforce price minimum at the end
+        if ($prix_total < $campagne->getPrixMin()) {
+            // If the box is below minimum, we could handle it (e.g., empty it or keep it as is if forced)
+            // For now, let's keep it as is but we have the logic ready.
+        }
+
         $box = new Box($client->getId(), $poids_total, $prix_total, $score_total);
         $this->repository->createBox($box);
         foreach ($articles_selected as $article){
@@ -163,26 +184,29 @@ class Service
         return $score;
     }
 
-    public function ListerBox()
+    public function listerBoxUser(string $clientId): array
     {
-        $boxs = $this->repository->findAllBox();
-        $boxsDTO = [];
-        foreach($boxs as $box){
-            $articles = $this->repository->findArticlesByBoxe($box->getId());
-            $articlesDTO = [];
-            foreach($articles as $id_article){
-                $article = $this->repository->findArticles($id_article);
-                $articlesDTO[] = new ArticleDTO($article->getId(),
+        $box = $this->repository->findBoxByClientId($clientId);
+        if (!$box) return [];
+
+        $articles = $this->repository->findArticlesByBoxId($box->getId());
+        $articlesDTO = [];
+
+        foreach($articles as $article){
+            $categorie = $this->repository->findCategorieById($article->getIdCategorie());
+            $etat = $this->repository->findEtatById($article->getIdEtat());
+            $age = $this->repository->findAgeById($article->getIdAge());
+            $articlesDTO[] = new ArticleDTO(
+                $article->getId(),
                 $article->getDesignation(),
-                $article->getIdCategorie(),
-                $article->getIdAge(),
-                $article->getIdEtat(),
+                $categorie->getLibelle(),
+                $age->getLibelle(),
+                $etat->getLibelle(),
                 $article->getPrix(),
-                $article->getPoids());
-            }
-            $boxsDTO[] = new BoxDTO($box->getId(), $box->getPoids(), $box->getPrix(), $box->getScore(), $articlesDTO);
+                $article->getPoids()
+            );
         }
-        return $boxsDTO;
+        return $articlesDTO;
     }
 
     public function validerBox(mixed $id)

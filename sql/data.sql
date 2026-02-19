@@ -168,9 +168,9 @@ VALUES
 
 INSERT INTO utilisateur (nom, mail, mdp, admin)
 VALUES
-    ('Alice Dupont', 'alice@example.com', 'pass123', TRUE),
-    ('Bob Martin', 'bob@example.com', 'secret', FALSE),
-    ('Charlie Bernard', 'charlie@example.com', 'mdp456', FALSE);
+    ('Alice Dupont', 'alice@example.com', '$2y$10$vt7r/OBs4SpdcO4unDyXpOLUgi9m4x0sAf41I6vRa4plPsysxyEEu', TRUE),
+    ('Bob Martin', 'bob@example.com', '$2y$10$9YIy6LPlN7VhjTyupXqhyO5bD8245vWwfvgqIl0rNj9DLWQ76Blm2', FALSE),
+    ('Charlie Bernard', 'charlie@example.com', '$2y$10$Ui8eGzKeumlu6H3ttdgFwuqdSTtaEWmbnhz.c007FKWWFBqznIju2', FALSE);
 
 INSERT INTO client (id, age, categ_1, categ_2, categ_3, categ_4, categ_5, categ_6)
 VALUES

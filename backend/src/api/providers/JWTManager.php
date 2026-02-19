@@ -26,6 +26,11 @@ class JWTManager
 
     public function decodeToken($token)
     {
-        //a completer
+        try {
+            $decoded = JWT::decode($token, new Key($_ENV['JWT_SECRET'], 'HS256'));
+            return (array) $decoded;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
