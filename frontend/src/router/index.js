@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Front-office
 import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/front/RegisterView.vue'
+import LoginView from '../views/front/LoginView.vue'
 import BoxView from '../views/front/BoxView.vue'
 import PreferencesView from '../views/front/PreferencesView.vue'
 
@@ -18,6 +19,7 @@ const routes = [
 
   // Front-office (abonnés)
   { path: '/front/inscription', component: RegisterView },
+  { path: '/front/connexion', component: LoginView },
   { path: '/front/ma-box', component: BoxView },
   { path: '/front/preferences', component: PreferencesView },
 
