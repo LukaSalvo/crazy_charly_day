@@ -3,6 +3,7 @@
 use Psr\Container\ContainerInterface;
 use toybox\core\application\usecases\Service;
 use toybox\infra\repositories\Repository;
+use toybox\infra\repositories\UserRepository;
 
 return [
     'pdo.db' => function (ContainerInterface $container) {
@@ -10,8 +11,14 @@ return [
         return new PDO(
             "{$db['driver']}:host={$db['host']};dbname={$db['database']}",
             $db['username'],
-            $db['password']);
+            $db['password']
+        );
     },
+
+    UserRepository::class => function (ContainerInterface $container) {
+        return new UserRepository($container->get('pdo.db'));
+    },
+    
     Repository::class => function (ContainerInterface $container) {
         return new Repository($container->get('pdo.db'));
     },

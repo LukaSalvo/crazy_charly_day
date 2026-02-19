@@ -19,6 +19,11 @@
     "phpunit/phpunit": "^11.0",
     "phpstan/phpstan": "^1.11"
   },
+  "config": {
+    "audit": {
+      "block-insecure": false
+    }
+  },
   "autoload": {
     "psr-4": {
       "toybox\\api\\": "src/api",
