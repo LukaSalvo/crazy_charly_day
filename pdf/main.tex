@@ -96,37 +96,52 @@ L'application doit être conteneurisée à l'aide de Docker, avec les services s
     \item \textbf{Orchestration} : Utilisation de \texttt{docker-compose} pour lier les services, gérer les volumes de données et les réseaux internes.
 \end{itemize}
 
+
+
 \section{Architecture Logicielle}
-L'arborescence du projet témoigne d'une volonté de séparation des responsabilités :
+L'arborescence du projet témoigne d'une volonté de séparation stricte des responsabilités.
 
 \subsection{Backend (PHP)}
-Le backend suit une \textbf{architecture hexagonale} (ou Clean Architecture) pour garantir la maintenabilité :
+Le backend suit une \textbf{architecture hexagonale} rigoureuse, utilisant le framework Slim 4 et l'injection de dépendances (PHP-DI) :
 \begin{itemize}
-    \item \textbf{Application Core} : Contient la logique métier (\texttt{Service.php}) et les cas d'utilisation (\texttt{usecases}).
-    \item \textbf{Infrastructure} : Gère les détails techniques comme l'accès à la base de données via des dépôts (\texttt{repositories}).
-    \item \textbf{API (Interface)} : Point d'entrée de l'application géré par des Actions (\texttt{LoginAction}, \texttt{RegisterAction}) et sécurisé par des middlewares (JWT, CORS, Authz).
+    \item \textbf{Application Core} : La logique métier est isolée dans le namespace \texttt{application\_core}. Elle définit les ports (DTOs comme \texttt{AbonneDTO}, \texttt{ArticleDTO}) et les services métiers (\texttt{Service.php}).
+    \item \textbf{Infrastructure} : Implémentation de la persistance via le \textit{Pattern Repository} (\texttt{UserRepository.php}, \texttt{Repository.php}) assurant l'indépendance vis-à-vis du SGBD PostgreSQL.
+    \item \textbf{Couche API} : 
+        \begin{itemize}
+            \item \textbf{Actions} : Chaque point de terminaison est géré par une classe unique (ex: \texttt{AjouterArticleAction}, \texttt{RegisterAction}).
+            \item \textbf{Middleware Stack} : Sécurisation par couches incluant la gestion du \texttt{CORS}, l'authentification JWT (\texttt{AuthnMiddleware}), et les autorisations (\texttt{AuthzMiddleware}).
+        \end{itemize}
 \end{itemize}
 
-\subsection{Frontend (Vue.js)}
-Le frontend est développé avec le framework \textbf{Vue.js 3} et l'outil de build \textbf{Vite}.
+\subsection{Frontend (Vue.js 3)}
+L'interface est une \textit{Single Page Application} (SPA) développée avec \textbf{Vue.js 3} et l'outil de build \textbf{Vite}. Elle est structurée en deux espaces distincts :
 \begin{itemize}
-    \item Architecture basée sur des composants réutilisables (\texttt{components}).
-    \item Communication avec le backend via des appels asynchrones à l'API REST.
+    \item \textbf{Espace Client (Front Office)} : Gestion du tunnel d'achat et des préférences (\texttt{RegisterView}, \texttt{LoginView}, \texttt{BoxView}).
+    \item \textbf{Espace Gestionnaire (Back Office)} : Tableaux de bord pour le suivi des campagnes et des abonnés (\texttt{DashboardView}, \texttt{CampaignView}, \texttt{SubscribersView}).
+    \item \textbf{Navigation} : Utilisation de \texttt{vue-router} pour assurer un routage fluide sans rechargement de page.
 \end{itemize}
+
+
 
 \section{Pipeline de Déploiement (CI/CD)}
 Afin de garantir la qualité et la stabilité du code à chaque modification :
 \begin{itemize}
-    \item \textbf{Intégration Continue} : Utilisation de GitHub Actions pour automatiser les tests.
+    \item \textbf{Intégration Continue} : Utilisation de GitHub Actions pour automatiser les tests en déploiyant les docker pour vérifier si ils se lancent correctement.
     \item \textbf{Validation Docker} : À chaque \textit{push} sur la branche principale, une pipeline vérifie que les conteneurs se construisent (\texttt{build}) et démarrent (\texttt{up}) correctement.
     \item \textbf{Sécurité} : Gestion des variables d'environnement sensibles via les \textit{Secrets} GitHub pour éviter toute fuite de données de connexion.
 \end{itemize}
 
-\section{Plan de Tests}
+
+
+\section{Déploiement}
+\subsection{Choix de l'infrastructure}
+Initialement prévu sur l'infrastructure \texttt{Dockétu}, le déploiement a été migré vers un serveur privé accessible publiquement. Ce choix stratégique a permis de lever plusieurs barrières techniques rencontrées en environnement partagé :
 \begin{itemize}
-    \item \textbf{Tests Unitaires} : Vérification de la logique métier dans le \texttt{Application Core}.
-    \item \textbf{Tests d'Intégration} : Validation de la connexion entre l'API et la base de données PostgreSQL.
-    \item \textbf{Tests de Disponibilité} : Vérification de la réponse HTTP 200 sur les points d'entrée critiques (Home, Liste des articles).
+    \item \textbf{Gestion des ports} : Éviter les conflits de ports dynamiques rencontrés sur Dockétu, permettant d'utiliser les ports standards pour l'API et le Frontend.
+    \item \textbf{Configuration Réseau} : Résolution des blocages liés aux hôtes autorisés (\textit{Allowed Hosts}) de Vite.js et aux politiques de sécurité CORS.
+    \item \textbf{Disponibilité} : Accès permanent via une adresse publique stable pour les démonstrations et tests utilisateurs.
 \end{itemize}
+
+
 
 \end{document}

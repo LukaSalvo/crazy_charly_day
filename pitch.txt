@@ -11,13 +11,15 @@ j'ai dessiné la vitrine et les rayons.
 
 Mathieu — Le Cerveau et l'Organisation (Backend)
 
-"Moi, c'est Mathieu, et avec Manech, on s'est occupé de la salle des machines, ce qu'on appelle le Backend. On a utilisé PHP pour construire toute la logique invisible.
+"Moi, c'est Mathieu, et avec Manech, on s'est occupé de la salle des machines, ce qu'on appelle le Backend.
+On a utilisé PHP pour construire toute la logique invisible.
 
-Si Paul a fait le menu, nous, on est en cuisine. On a mis en place un système qui 'réfléchit' : quand un parent donne l'âge de son enfant, notre programme cherche automatiquement les jouets correspondants dans la base de données. On a aussi sécurisé tout ça avec des clés numériques (JWT) pour que personne ne puisse voler les infos des clients. En gros, on reçoit les commandes de Paul, on vérifie que tout est en ordre, on prépare les données et on les lui renvoie toutes prêtes."
+Si Paul a fait le menu, nous, on est en cuisine. 
+On a mis en place un système qui 'réfléchit' : quand un parent donne l'âge de son enfant, notre programme cherche automatiquement les jouets correspondants dans la base de données. On a aussi sécurisé tout ça avec des clés numériques (JWT) pour que personne ne puisse voler les infos des clients. En gros, on reçoit les commandes de Paul, on vérifie que tout est en ordre, on prépare les données et on les lui renvoie toutes prêtes."
 
 
 
-Et moi, c'est Luka. Mon travail, c'est de faire en sorte que le site de Paul et le cerveau de Mathieu s'entendent parfaitement sur n'importe quel ordinateur.
+Mon travail, c'est de faire en sorte que le site de Paul et le cerveau de Mathieu s'entendent parfaitement sur n'importe quel ordinateur.
 
 Pour ça, j'ai utilisé Docker. Imaginez que l'application est un kit de meubles en kit : j'ai tout mis dans des boîtes séparées (les conteneurs) pour que tout soit bien rangé. Grâce à mon travail, on n'a plus besoin d'installer 50 logiciels pour faire marcher le projet. On claque des doigts (ou on tape une commande), et tout s'allume en même temps, que ce soit sur mon Mac ou sur le PC de l'école. Je suis le garant de la stabilité technique de l'équipe."
 

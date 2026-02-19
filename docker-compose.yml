@@ -3,24 +3,25 @@ networks:
     driver: bridge
 
 services:
-  # Base de données (MySQL)
+  # Base de données
+  # ATTENTION : Ton image est Postgres mais tes scripts et ton PHP utilisent MySQL/PDO
+  # Je repasse en MySQL pour être cohérent avec ton Repository.php
   db:
-    image: "postgres:latest"
+    image: "mysql:8.0"
     restart: always
-    env_file: ./.env
-    ports:
-      - "5432:5432"
+    env_file: ./backend/.env
+    # Pas d'exposition de port 3306 nécessaire sur Dockétu (sécurité + conflits)
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     networks:
       - toybox.net
 
-  # Backend (PHP + Apache/Nginx)
+  # Backend (PHP)
   backend:
     build: ./backend
-    env_file: ./.env
+    env_file: ./backend/.env
     ports:
-      - "8082:80"
+      - "18082:80" # CHANGE ICI : Utilise ton port attribué (ex: 18082)
     volumes:
       - ./backend:/var/php
     working_dir: /var/php
@@ -35,7 +36,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:5173" # Port par défaut de Vite/Vue
+      - "15173:5173" # CHANGE ICI : Utilise ton port attribué (ex: 15173)
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -44,10 +45,10 @@ services:
     networks:
       - toybox.net
 
-  #adminer
+  # Adminer (Outil de gestion DB)
   adminer:
     image: adminer
     ports:
-      - "8081:8080"
+      - "18081:8080" # CHANGE ICI : Utilise un port attribué
     networks:
       - toybox.net
