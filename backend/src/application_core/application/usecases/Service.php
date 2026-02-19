@@ -11,6 +11,7 @@ use toybox\core\domain\entities\Box;
 use toybox\core\domain\entities\Campagne;
 use toybox\core\domain\entities\Client;
 use toybox\infra\repositories\Repository;
+use toybox\core\application\ports\api\dtos\BoxDTO;
 
 class Service
 {
@@ -160,4 +161,28 @@ class Service
         }
         return $score;
     }
+
+    public function ListerBox()
+    {
+        $boxs = $this->repository->findAllBox();
+        $boxsDTO = [];
+        foreach($boxs as $box){
+            $articles = $this->repository->findArticlesByBoxe($box->getId());
+            $articlesDTO = [];
+            foreach($articles as $id_article){
+                $article = $this->repository->findArticles($id_article);
+                $articlesDTO[] = new ArticleDTO($article->getId(),
+                $article->getDesignation(),
+                $article->getIdCategorie(),
+                $article->getIdAge(),
+                $article->getIdEtat(),
+                $article->getPrix(),
+                $article->getPoids());
+            }
+            $boxsDTO[] = new BoxDTO($box->getId(), $box->getPoids(), $box->getPrix(), $box->getScore(), $articlesDTO);
+        }
+        return $boxsDTO;
+    }
+
+
 }

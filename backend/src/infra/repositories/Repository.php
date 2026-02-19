@@ -222,4 +222,49 @@ class Repository
         $stmt->bindValue(':id_campagne', $id_campagne, PDO::PARAM_STR);
         $stmt->execute();
     }
+
+    public function findAllBox()
+    {
+        $sql = "SELECT * FROM box";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $boxes = [];
+        foreach($rows as $row){
+            $boxes[] = new Box($row['id_client'], $row['poids'], $row['prix'], $row['score']);
+        }
+        return $boxes;
+    }
+
+    public function findArticlesByBoxe($getId)
+    {
+        $sql = "SELECT * FROM boxobj WHERE id_box = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $getId, PDO::PARAM_STR);
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
+        $articles = [];
+        foreach($rows as $row){
+            $articles[] = $row['id_article'];
+        }
+        return $articles;
+    }
+
+    public function findArticles(mixed $id_article)
+    {
+        $sql = "SELECT * FROM article WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id_article, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return new Article(
+            $row['id'],
+            $row['designation'],
+            $row['id_categ'],
+            $row['id_age'],
+            $row['id_etat'],
+            $row['prix'],
+            $row['poids']
+        );
+    }
 }

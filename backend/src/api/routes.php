@@ -5,6 +5,7 @@ use toybox\api\actions\AjouterArticleAction;
 use toybox\api\actions\CreerCampagneAction;
 use toybox\api\actions\ListerAbonnesAction;
 use toybox\api\actions\ListerArticlesAction;
+use toybox\api\actions\ListerBoxAction;
 use toybox\api\actions\SupprimerAbonneAction;
 use toybox\api\actions\SupprimerArticleAction;
 use toybox\api\middlewares\AjouterArticleMiddleware;
@@ -39,6 +40,7 @@ return function (App $app): App {
         return $response;
     });
     $app->post('/campagnes', CreerCampagneAction::class)->setName('creer_campagne');
+    $app->get('/boxes', ListerBoxAction::class)->setName('lister_boxes');
 
     return $app;
 };
