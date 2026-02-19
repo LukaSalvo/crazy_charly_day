@@ -100,7 +100,7 @@ class Service
         $poids_total = 0;
         $prix_total = 0;
         $possible = true;
-        $id_box = Uuid::uuid4();
+        $articles_selected = [];
         while ($possible){
             $possible = false;
             $best_score = -100;
@@ -109,8 +109,8 @@ class Service
                 if($poids_total + $article->getPoids() < $campagne->getPoidsMax() &&
                     $prix_total + $article->getPrix() < $campagne->getPrixMax() &&
                     $prix_total + $article->getPrix() > $campagne->getPrixMin() &&
-                    !$this->repository->findBoxObjByIdObj($article->getIdObj()) &&
-                    $client->getAge() == $article->getAge()
+                    !$this->repository->findBoxObjByIdObj($article->getId()) &&
+                    $client->getAge() == $article->getIdAge()
                 ){
                     $new_score = $this->calculerScore($article, $client);
                     if($new_score > $best_score){
@@ -124,13 +124,16 @@ class Service
                 $score_total += $best_score;
                 $poids_total += $best_article->getPoids();
                 $prix_total += $best_article->getPrix();
-                $this->repository->createBoxObj($id_box, $best_article->getId());
+                $articles_selected[] = $best_article;
+
             }
         }
-        $box = new Box($client->getId(), $poids_total, $score_total, $prix_total);
-        $box->setId($id_box);
+        $box = new Box($client->getId(), $poids_total, $prix_total, $score_total);
         $this->repository->createBox($box);
-        return $id_box;
+        foreach ($articles_selected as $article){
+            $this->repository->createBoxObj($box->getId(), $article->getId());
+        }
+        return $box->getId();
     }
 
     private function calculerScore(Article $article, Client $client):float {

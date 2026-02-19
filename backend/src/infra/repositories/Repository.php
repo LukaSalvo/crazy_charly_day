@@ -199,7 +199,7 @@ class Repository
     }
 
     public function createBoxObj(string $id_box, string $id_obj){
-        $sql = "INSERT INTO box_obj VALUES (:id_box, :id_obj)";
+        $sql = "INSERT INTO boxobj VALUES (:id_box, :id_obj)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':id_box', $id_box, PDO::PARAM_STR);
         $stmt->bindValue(':id_obj', $id_obj, PDO::PARAM_STR);

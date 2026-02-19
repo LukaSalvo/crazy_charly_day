@@ -30,22 +30,22 @@ class Client
     public function getAge():int{
         return $this->age;
     }
-    public function getCateg1():int{
+    public function getCateg1(){
         return $this->categ_1;
     }
-    public function getCateg2():int{
+    public function getCateg2(){
         return $this->categ_2;
     }
-    public function getCateg3():int{
+    public function getCateg3(){
         return $this->categ_3;
     }
-    public function getCateg4():int{
+    public function getCateg4(){
         return $this->categ_4;
     }
-    public function getCateg5():int{
+    public function getCateg5(){
         return $this->categ_5;
     }
-    public function getCateg6():int{
+    public function getCateg6(){
         return $this->categ_6;
     }
 }
