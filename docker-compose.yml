@@ -13,7 +13,7 @@ services:
 
   # Backend (PHP + Apache/Nginx)
   backend:
-    build: ./backend
+    build: ./backend/app
     ports:
       - "8080:80"
     volumes:
