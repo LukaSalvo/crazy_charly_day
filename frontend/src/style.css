@@ -1,19 +1,12 @@
 :root {
-    --bg: #ffffff;
-    --text: #1a1a1a;
-    --text-muted: #666666;
-    --accent: #2563eb;
-    --border: #e5e7eb;
+    --bg: #fdf4e5;
+    --text: #3a2a1a;
+    --text-muted: #7a6a5a;
+    --accent: #85acbd;
+    --accent-alt: #ffde59;
+    --border: #d9ae88;
+    --card-bg: #ffffff;
     --radius: 8px;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #0f172a;
-        --text: #f1f5f9;
-        --text-muted: #94a3b8;
-        --border: #334155;
-    }
 }
 
 * {
@@ -60,6 +53,7 @@ a {
     border-radius: var(--radius);
     padding: 1.5rem;
     margin-bottom: 1rem;
+    background: var(--card-bg);
 }
 
 .btn {
@@ -107,7 +101,7 @@ select {
     padding: 0.5rem;
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    background: transparent;
+    background: var(--bg);
     color: inherit;
     outline: none;
 }

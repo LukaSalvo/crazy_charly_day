@@ -7,5 +7,6 @@ return function (App $app):App {
 
     $app->get('/articles', ListerArticlesAction::class)->setName('lister_articles');
 
+    
     return $app;
 };
