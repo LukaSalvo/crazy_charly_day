@@ -101,6 +101,7 @@ create table box
     CONSTRAINT fk_id_client
         FOREIGN KEY (id_client)
             REFERENCES client (id)
+                ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS campagne CASCADE;
@@ -120,7 +121,8 @@ create table boxobj
 
     CONSTRAINT fk_box
         FOREIGN KEY (id_box)
-            REFERENCES box (id),
+            REFERENCES box (id)
+                ON DELETE CASCADE,
     CONSTRAINT fk_article
         FOREIGN KEY (id_article)
             REFERENCES article (id)
@@ -134,7 +136,8 @@ create table boxcampagne
 
     CONSTRAINT fk_box
         FOREIGN KEY (id_box)
-            REFERENCES box (id),
+            REFERENCES box (id)
+                ON DELETE CASCADE,
     CONSTRAINT fk_campagne
         FOREIGN KEY (id_campagne)
             REFERENCES campagne (id)

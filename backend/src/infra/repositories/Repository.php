@@ -134,4 +134,22 @@ class Repository
         $row = $stmt->fetch();
         return $row['age'];
     }
+
+    public function supprimerUtilisateur(mixed $id)
+    {
+        $sql = "DELETE FROM utilisateur WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    }
+
+    public function supprimerClient(mixed $id)
+    {
+        $sql = "DELETE FROM client WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    }
 }

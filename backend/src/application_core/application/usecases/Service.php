@@ -71,4 +71,11 @@ class Service
         return $abonnesDTO;
     }
 
+    public function supprimerAbonne(mixed $id)
+    {
+        $res2 = $this->repository->supprimerClient($id);
+        $res = $this->repository->supprimerUtilisateur($id);
+        return ($res && $res2);
+    }
+
 }
